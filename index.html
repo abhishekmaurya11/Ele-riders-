@@ -7,7 +7,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Electric Riders Registration Form</title>
+  <title>
+    Electric Riders Registration Form
+  </title>
 
   <!-- GOOGLE FONT -->
 
@@ -73,7 +75,7 @@
     }
 
     /* ===================================
-       TOP BAR
+       TOP LINE
     =================================== */
 
     .top-line {
@@ -113,9 +115,9 @@
 
       pointer-events: none;
 
-      white-space: nowrap;
-
       z-index: 0;
+
+      white-space: nowrap;
 
     }
 
@@ -292,54 +294,6 @@
     }
 
     /* ===================================
-       INLINE FIELD
-    =================================== */
-
-    .inline-field {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-
-      margin-bottom: 16px;
-
-      position: relative;
-
-      z-index: 2;
-
-    }
-
-    .inline-field label {
-
-      white-space: nowrap;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-    }
-
-    .inline-field input {
-
-      flex: 1;
-
-      border: none;
-
-      border-bottom: 1px dotted #666;
-
-      padding: 6px 4px;
-
-      outline: none;
-
-      font-size: 13px;
-
-      background: transparent;
-
-    }
-
-    /* ===================================
        MULTI FIELD
     =================================== */
 
@@ -369,13 +323,13 @@
 
       width: 100%;
 
-      height: 22px;
+      height: 24px;
 
       border: none;
 
       border-bottom: 1px dotted #666;
 
-      margin-bottom: 6px;
+      margin-bottom: 8px;
 
       outline: none;
 
@@ -593,20 +547,6 @@
 
       }
 
-      .inline-field {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-      }
-
-      .inline-field input {
-
-        width: 100%;
-
-      }
-
     }
 
     /* ===================================
@@ -702,25 +642,35 @@
       व्यक्तिगत जानकारी :-
     </div>
 
-    <div class="inline-field">
+    <!-- 1 -->
+
+    <div class="multi-field">
 
       <label>
         1. ड्राइवर का नाम :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
 
-    <div class="inline-field">
+    <!-- 2 -->
+
+    <div class="multi-field">
 
       <label>
         2. ड्राइवर का मोबाइल नम्बर :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
+
+    <!-- 3 -->
 
     <div class="multi-field">
 
@@ -729,12 +679,12 @@
       </label>
 
       <input type="text" class="line-input">
-
       <input type="text" class="line-input">
-
       <input type="text" class="line-input">
 
     </div>
+
+    <!-- 4 -->
 
     <div class="multi-field">
 
@@ -743,50 +693,64 @@
       </label>
 
       <input type="text" class="line-input">
-
       <input type="text" class="line-input">
-
       <input type="text" class="line-input">
 
     </div>
 
-    <div class="inline-field">
+    <!-- 5 -->
+
+    <div class="multi-field">
 
       <label>
         5. कार्य स्थल का नाम :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
 
-    <div class="inline-field">
+    <!-- 6 -->
+
+    <div class="multi-field">
 
       <label>
         6. ड्राइवर की आईडी :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
 
-    <div class="inline-field">
+    <!-- 7 -->
+
+    <div class="multi-field">
 
       <label>
         7. ड्राइवर की माताजी का नाम एवं मोबाइल नम्बर :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
 
-    <div class="inline-field">
+    <!-- 8 -->
+
+    <div class="multi-field">
 
       <label>
         8. ड्राइवर की पिताजी का नाम एवं मोबाइल नम्बर :
       </label>
 
-      <input type="text">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
+      <input type="text" class="line-input">
 
     </div>
 
