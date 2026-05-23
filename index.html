@@ -3,19 +3,17 @@
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
-    Electric Riders Registration Form
+    इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
   </title>
 
   <!-- GOOGLE FONT -->
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- HTML2CANVAS -->
 
@@ -26,6 +24,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
+
+    :root {
+
+      --a4-width: 210mm;
+      --a4-height: 297mm;
+
+      --black: #111;
+      --gray: #666;
+      --border: #cfcfcf;
+
+    }
 
     * {
 
@@ -40,11 +49,17 @@
 
     body {
 
-      background: #dde4eb;
+      background: #dde5ee;
 
       padding: 20px;
 
-      color: #111;
+      color: var(--black);
+
+    }
+
+    #pdf-content {
+
+      width: 100%;
 
     }
 
@@ -54,9 +69,9 @@
 
     .page {
 
-      width: 210mm;
+      width: var(--a4-width);
 
-      min-height: 297mm;
+      min-height: var(--a4-height);
 
       background: white;
 
@@ -66,17 +81,13 @@
 
       position: relative;
 
-      border: 1px solid #d0d0d0;
+      border: 1px solid #d7d7d7;
 
       overflow: hidden;
 
       page-break-after: always;
 
     }
-
-    /* ===================================
-       TOP LINE
-    =================================== */
 
     .top-line {
 
@@ -88,13 +99,9 @@
       width: 100%;
       height: 6px;
 
-      background: black;
+      background: #000;
 
     }
-
-    /* ===================================
-       WATERMARK
-    =================================== */
 
     .watermark {
 
@@ -111,13 +118,115 @@
 
       font-weight: 800;
 
-      color: rgba(0, 0, 0, 0.03);
-
-      pointer-events: none;
+      color: rgba(0,0,0,0.03);
 
       z-index: 0;
 
+      pointer-events: none;
+
+      user-select: none;
+
       white-space: nowrap;
+
+    }
+
+    .page-number {
+
+      position: absolute;
+
+      top: 10mm;
+      right: 14mm;
+
+      font-size: 12px;
+
+      color: #777;
+
+      z-index: 2;
+
+    }
+
+    /* ===================================
+       PHOTO
+    =================================== */
+
+    .photo-wrapper {
+
+      width: 100%;
+
+      display: flex;
+
+      justify-content: center;
+
+      margin-bottom: 22px;
+
+      position: relative;
+
+      z-index: 5;
+
+    }
+
+    .photo-box {
+
+      width: 170px;
+
+      border: 2px solid #000;
+
+      border-radius: 14px;
+
+      background: #fff;
+
+      padding: 12px;
+
+    }
+
+    .photo-box video,
+    .photo-box img {
+
+      width: 100%;
+
+      height: 200px;
+
+      object-fit: cover;
+
+      border-radius: 10px;
+
+      background: #f2f2f2;
+
+    }
+
+    #photoPreview {
+
+      display: none;
+
+    }
+
+    #canvas {
+
+      display: none;
+
+    }
+
+    .capture-btn {
+
+      width: 100%;
+
+      margin-top: 10px;
+
+      padding: 11px;
+
+      border: none;
+
+      background: #000;
+
+      color: white;
+
+      border-radius: 8px;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
 
     }
 
@@ -129,7 +238,7 @@
 
       text-align: center;
 
-      margin-bottom: 28px;
+      margin-bottom: 30px;
 
       position: relative;
 
@@ -139,7 +248,7 @@
 
     .header h1 {
 
-      font-size: 28px;
+      font-size: 30px;
 
       font-weight: 800;
 
@@ -151,121 +260,7 @@
 
       font-size: 14px;
 
-      color: #555;
-
-    }
-
-    /* ===================================
-       PHOTO BOX
-    =================================== */
-
-    .photo-box {
-
-      position: absolute;
-
-      top: 18mm;
-      right: 16mm;
-
-      width: 135px;
-
-      padding: 10px;
-
-      border: 1.5px solid #000;
-
-      border-radius: 12px;
-
-      background: #fff;
-
-      z-index: 5;
-
-    }
-
-    .photo-header {
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-    }
-
-    .photo-circle {
-
-      width: 110px;
-
-      height: 110px;
-
-      border: 2px solid #000;
-
-      border-radius: 50%;
-
-      overflow: hidden;
-
-      background: #f5f5f5;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-    }
-
-    .photo-circle video,
-    .photo-circle img {
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-
-      background: #000;
-
-    }
-
-    .photo-circle canvas {
-
-      display: none;
-
-    }
-
-    .photo-circle img {
-
-      display: none;
-
-    }
-
-    .capture-btn {
-
-      width: 100%;
-
-      margin-top: 12px;
-
-      padding: 9px;
-
-      border: none;
-
-      background: #000;
-
-      color: white;
-
-      border-radius: 8px;
-
-      font-size: 12px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-
-    }
-
-    .capture-btn:hover {
-
-      opacity: 0.92;
+      color: #444;
 
     }
 
@@ -275,7 +270,11 @@
 
     .section-title {
 
-      margin-top: 24px;
+      font-size: 22px;
+
+      font-weight: 700;
+
+      margin-top: 26px;
 
       margin-bottom: 18px;
 
@@ -283,10 +282,6 @@
 
       padding-bottom: 6px;
 
-      font-size: 20px;
-
-      font-weight: 700;
-
       position: relative;
 
       z-index: 2;
@@ -294,12 +289,18 @@
     }
 
     /* ===================================
-       MULTI FIELD
+       FIELD
     =================================== */
 
-    .multi-field {
+    .field-inline {
 
-      margin-bottom: 22px;
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 14px;
+
+      margin-bottom: 18px;
 
       position: relative;
 
@@ -307,35 +308,53 @@
 
     }
 
-    .multi-field label {
+    .field-inline label {
 
-      display: block;
+      width: 280px;
 
-      font-size: 13px;
+      font-size: 14px;
 
-      font-weight: 700;
+      font-weight: 600;
 
-      margin-bottom: 8px;
+      line-height: 1.8;
+
+      flex-shrink: 0;
 
     }
 
-    .line-input {
+    .triple-line {
+
+      flex: 1;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 10px;
+
+    }
+
+    .triple-line input {
 
       width: 100%;
-
-      height: 24px;
 
       border: none;
 
       border-bottom: 1px dotted #666;
 
-      margin-bottom: 8px;
-
-      outline: none;
+      padding: 6px 2px;
 
       font-size: 13px;
 
       background: transparent;
+
+      outline: none;
+
+    }
+
+    input:focus {
+
+      border-bottom: 1px solid #000;
 
     }
 
@@ -343,15 +362,15 @@
        DOCUMENTS
     =================================== */
 
-    .documents {
+    .documents-grid {
 
       display: grid;
 
       grid-template-columns: repeat(2, 1fr);
 
-      gap: 12px;
+      gap: 14px;
 
-      margin-top: 12px;
+      margin-top: 15px;
 
       position: relative;
 
@@ -359,24 +378,22 @@
 
     }
 
-    .documents label {
+    .documents-grid label {
 
       display: flex;
 
       align-items: center;
 
-      gap: 8px;
+      gap: 10px;
 
-      font-size: 13px;
-
-      font-weight: 600;
+      font-size: 14px;
 
     }
 
     input[type="checkbox"] {
 
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
 
       accent-color: black;
 
@@ -390,9 +407,9 @@
 
       line-height: 2;
 
-      font-size: 13px;
-
       text-align: justify;
+
+      font-size: 14px;
 
       margin-top: 15px;
 
@@ -406,27 +423,81 @@
        SIGNATURE
     =================================== */
 
-    .signature-box {
+    .signature-line {
 
       margin-top: 40px;
 
-      width: 260px;
-
-      height: 80px;
-
-      border: 1.5px dashed black;
-
       display: flex;
 
-      align-items: end;
+      align-items: center;
 
-      justify-content: center;
-
-      padding-bottom: 8px;
+      gap: 18px;
 
       position: relative;
 
       z-index: 2;
+
+    }
+
+    .signature-line span {
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+    }
+
+    .signature-line .line {
+
+      flex: 1;
+
+      border-bottom: 1px dashed #000;
+
+      height: 1px;
+
+    }
+
+    /* ===================================
+       LIST
+    =================================== */
+
+    .info-list {
+
+      margin-left: 22px;
+
+      margin-top: 12px;
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+    .info-list li {
+
+      margin-bottom: 18px;
+
+      line-height: 1.8;
+
+      font-size: 14px;
+
+    }
+
+    .info-list input {
+
+      width: 240px;
+
+      border: none;
+
+      border-bottom: 1px dotted #666;
+
+      margin-left: 8px;
+
+      padding: 4px;
+
+      background: transparent;
+
+      outline: none;
 
     }
 
@@ -434,11 +505,9 @@
        RULES
     =================================== */
 
-    .rules-list {
+    .rules-section {
 
-      margin-left: 20px;
-
-      margin-top: 15px;
+      margin-bottom: 30px;
 
       position: relative;
 
@@ -446,13 +515,51 @@
 
     }
 
-    .rules-list li {
+    .rules-section h3 {
+
+      font-size: 20px;
+
+      margin-bottom: 16px;
+
+      font-weight: 700;
+
+    }
+
+    .rules-section ul {
+
+      margin-left: 24px;
+
+      line-height: 2;
+
+    }
+
+    .rules-section li {
 
       margin-bottom: 12px;
 
       font-size: 14px;
 
-      line-height: 1.7;
+    }
+
+    /* ===================================
+       MAIN HEADING
+    =================================== */
+
+    .main-heading {
+
+      text-align: center;
+
+      font-size: 30px;
+
+      font-weight: 800;
+
+      margin-bottom: 35px;
+
+      text-decoration: underline;
+
+      position: relative;
+
+      z-index: 2;
 
     }
 
@@ -479,7 +586,7 @@
     }
 
     /* ===================================
-       DOWNLOAD BUTTON
+       BUTTON
     =================================== */
 
     .download-btn {
@@ -494,17 +601,17 @@
 
       border: none;
 
-      background: black;
+      background: #000;
 
-      color: white;
+      color: #fff;
 
-      font-size: 16px;
+      border-radius: 8px;
+
+      font-size: 17px;
 
       font-weight: 700;
 
       cursor: pointer;
-
-      border-radius: 8px;
 
     }
 
@@ -530,20 +637,33 @@
 
       }
 
-      .photo-box {
+      .field-inline {
 
-        position: relative;
-
-        top: auto;
-        right: auto;
-
-        margin: 0 auto 20px;
+        flex-direction: column;
 
       }
 
-      .documents {
+      .field-inline label {
+
+        width: 100%;
+
+      }
+
+      .documents-grid {
 
         grid-template-columns: 1fr;
+
+      }
+
+      .info-list input {
+
+        width: 100%;
+
+        display: block;
+
+        margin-left: 0;
+
+        margin-top: 8px;
 
       }
 
@@ -586,6 +706,8 @@
 
 <body>
 
+<div id="pdf-content">
+
   <!-- ===================================
        PAGE 1
   =================================== -->
@@ -596,6 +718,30 @@
 
     <div class="watermark">
       ELECTRIC RIDERS
+    </div>
+
+    <div class="page-number">
+      1 | Page
+    </div>
+
+    <!-- PHOTO -->
+
+    <div class="photo-wrapper">
+
+      <div class="photo-box">
+
+        <video id="camera" autoplay playsinline></video>
+
+        <canvas id="canvas"></canvas>
+
+        <img id="photoPreview">
+
+        <button class="capture-btn" onclick="capturePhoto()">
+          फोटो कैप्चर करें
+        </button>
+
+      </div>
+
     </div>
 
     <!-- HEADER -->
@@ -612,145 +758,128 @@
 
     </div>
 
-    <!-- PHOTO -->
-
-    <div class="photo-box">
-
-      <div class="photo-header">
-
-        <div class="photo-circle">
-
-          <video id="camera" autoplay playsinline></video>
-
-          <canvas id="canvas"></canvas>
-
-          <img id="photoPreview">
-
-        </div>
-
-      </div>
-
-      <button class="capture-btn" onclick="capturePhoto()">
-        फोटो कैप्चर करें
-      </button>
-
-    </div>
-
     <!-- PERSONAL INFO -->
 
     <div class="section-title">
       व्यक्तिगत जानकारी :-
     </div>
 
-    <!-- 1 -->
+    <div class="field-inline">
 
-    <div class="multi-field">
+      <label>1. ड्राइवर का नाम :</label>
 
-      <label>
-        1. ड्राइवर का नाम :
-      </label>
+      <div class="triple-line">
 
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+        <input type="text">
+        <input type="text">
+        <input type="text">
 
-    </div>
-
-    <!-- 2 -->
-
-    <div class="multi-field">
-
-      <label>
-        2. ड्राइवर का मोबाइल नम्बर :
-      </label>
-
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+      </div>
 
     </div>
 
-    <!-- 3 -->
+    <div class="field-inline">
 
-    <div class="multi-field">
+      <label>2. ड्राइवर का मोबाइल नम्बर :</label>
 
-      <label>
-        3. ड्राइवर का वर्तमान पता :
-      </label>
+      <div class="triple-line">
 
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+        <input type="text">
+        <input type="text">
+        <input type="text">
 
-    </div>
-
-    <!-- 4 -->
-
-    <div class="multi-field">
-
-      <label>
-        4. ड्राइवर का स्थायी पता (आधार कार्ड के अनुसार) :
-      </label>
-
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+      </div>
 
     </div>
 
-    <!-- 5 -->
+    <div class="field-inline">
 
-    <div class="multi-field">
+      <label>3. ड्राइवर का वर्तमान पता :</label>
 
-      <label>
-        5. कार्य स्थल का नाम :
-      </label>
+      <div class="triple-line">
 
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+        <input type="text">
+        <input type="text">
+        <input type="text">
 
-    </div>
-
-    <!-- 6 -->
-
-    <div class="multi-field">
-
-      <label>
-        6. ड्राइवर की आईडी :
-      </label>
-
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+      </div>
 
     </div>
 
-    <!-- 7 -->
-
-    <div class="multi-field">
+    <div class="field-inline">
 
       <label>
-        7. ड्राइवर की माताजी का नाम एवं मोबाइल नम्बर :
+        4. ड्राइवर का स्थायी पता
+        (आधार कार्ड के अनुसार) :
       </label>
 
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
 
     </div>
 
-    <!-- 8 -->
+    <div class="field-inline">
 
-    <div class="multi-field">
+      <label>5. कार्य स्थल का नाम :</label>
+
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
+
+    </div>
+
+    <div class="field-inline">
+
+      <label>6. ड्राइवर की आईडी :</label>
+
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
+
+    </div>
+
+    <div class="field-inline">
 
       <label>
-        8. ड्राइवर की पिताजी का नाम एवं मोबाइल नम्बर :
+        7. ड्राइवर की माताजी का नाम एवं मो नं :
       </label>
 
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
-      <input type="text" class="line-input">
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
+
+    </div>
+
+    <div class="field-inline">
+
+      <label>
+        8. ड्राइवर की पिताजी का नाम एवं मो नं :
+      </label>
+
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
 
     </div>
 
@@ -760,113 +889,243 @@
       दस्तावेजों की सूची :-
     </div>
 
-    <div class="documents">
+    <div class="documents-grid">
 
-      <label><input type="checkbox"> आधार कार्ड</label>
+      <label><input type="checkbox"> A. आधार कार्ड</label>
 
-      <label><input type="checkbox"> पैन कार्ड</label>
+      <label><input type="checkbox"> B. पैन कार्ड</label>
 
-      <label><input type="checkbox"> वोटर कार्ड</label>
+      <label><input type="checkbox"> C. वोटर कार्ड</label>
 
-      <label><input type="checkbox"> ड्राइविंग लाइसेंस</label>
+      <label><input type="checkbox"> D. ड्राइविंग लाइसेंस</label>
 
-      <label><input type="checkbox"> पासपोर्ट</label>
+      <label><input type="checkbox"> E. पासपोर्ट</label>
 
-      <label><input type="checkbox"> चरित्र प्रमाण पत्र</label>
+      <label><input type="checkbox"> F. चरित्र प्रमाण पत्र</label>
 
     </div>
 
-    <div class="footer">
-      Electric Riders © 2026
+    <!-- GUARANTOR -->
+
+    <div class="section-title">
+      गारन्टर की जानकारी :-
+    </div>
+
+    <div class="field-inline">
+
+      <label>1. गारन्टर का नाम :</label>
+
+      <div class="triple-line">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+
+      </div>
+
     </div>
 
   </section>
 
-  <!-- DOWNLOAD -->
+</div>
 
-  <button class="download-btn" onclick="window.print()">
-    PDF डाउनलोड करें
-  </button>
+<button class="download-btn" onclick="downloadPDF()">
+  PDF डाउनलोड करें
+</button>
 
-  <script>
+<script>
 
-    /* CAMERA ACCESS */
+const video =
+  document.getElementById("camera");
 
-    const video =
-      document.getElementById("camera");
+const canvas =
+  document.getElementById("canvas");
 
-    const canvas =
-      document.getElementById("canvas");
+const preview =
+  document.getElementById("photoPreview");
 
-    const preview =
-      document.getElementById("photoPreview");
+/* CAMERA */
 
-    navigator.mediaDevices
-      .getUserMedia({
+async function startCamera() {
+
+  try {
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
 
         video: {
-          facingMode: "user"
-        }
+          facingMode: "user",
+          width: {
+            ideal: 1280
+          },
+          height: {
+            ideal: 720
+          }
+        },
 
-      })
-
-      .then((stream) => {
-
-        video.srcObject = stream;
-
-      })
-
-      .catch(() => {
-
-        alert("कैमरा एक्सेस नहीं मिला");
+        audio: false
 
       });
 
-    /* CAPTURE PHOTO */
+    video.srcObject = stream;
 
-    function capturePhoto() {
+  }
 
-      const ctx =
-        canvas.getContext("2d");
+  catch (error) {
 
-      canvas.width =
-        video.videoWidth;
+    alert("कैमरा एक्सेस नहीं मिला");
 
-      canvas.height =
-        video.videoHeight;
+  }
 
-      ctx.drawImage(
+}
 
-        video,
+startCamera();
 
-        0,
+/* PHOTO */
 
-        0,
+function capturePhoto() {
 
-        canvas.width,
+  const context =
+    canvas.getContext("2d");
 
-        canvas.height
+  canvas.width =
+    video.videoWidth;
 
+  canvas.height =
+    video.videoHeight;
+
+  context.drawImage(
+
+    video,
+
+    0,
+
+    0,
+
+    canvas.width,
+
+    canvas.height
+
+  );
+
+  const imageData =
+    canvas.toDataURL(
+      "image/jpeg",
+      1
+    );
+
+  preview.src =
+    imageData;
+
+  preview.style.display =
+    "block";
+
+  video.style.display =
+    "none";
+
+}
+
+/* PDF */
+
+async function downloadPDF() {
+
+  const button =
+    document.querySelector(".download-btn");
+
+  button.innerHTML =
+    "PDF तैयार हो रही है...";
+
+  button.disabled = true;
+
+  const {
+    jsPDF
+  } = window.jspdf;
+
+  const pdf =
+    new jsPDF({
+
+      orientation: "portrait",
+
+      unit: "mm",
+
+      format: "a4",
+
+      compress: true
+
+    });
+
+  const pages =
+    document.querySelectorAll(".page");
+
+  for (let i = 0; i < pages.length; i++) {
+
+    const page =
+      pages[i];
+
+    const canvas =
+      await html2canvas(page, {
+
+        scale: 3,
+
+        useCORS: true,
+
+        backgroundColor: "#ffffff",
+
+        logging: false,
+
+        scrollX: 0,
+
+        scrollY: 0
+
+      });
+
+    const image =
+      canvas.toDataURL(
+        "image/jpeg",
+        1.0
       );
 
-      const image =
-        canvas.toDataURL(
-          "image/jpeg",
-          1
-        );
+    if (i > 0) {
 
-      preview.src = image;
-
-      preview.style.display =
-        "block";
-
-      video.style.display =
-        "none";
+      pdf.addPage();
 
     }
 
-  </script>
+    pdf.addImage(
+
+      image,
+
+      "JPEG",
+
+      0,
+
+      0,
+
+      210,
+
+      297,
+
+      "",
+
+      "FAST"
+
+    );
+
+  }
+
+  pdf.save(
+    "Electric-Riders-Registration-Form.pdf"
+  );
+
+  button.innerHTML =
+    "PDF डाउनलोड करें";
+
+  button.disabled =
+    false;
+
+}
+
+</script>
 
 </body>
-
 </html>
