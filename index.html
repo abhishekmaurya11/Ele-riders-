@@ -9,15 +9,18 @@
 
   <title>Electric Riders Registration Form</title>
 
-  <!-- GOOGLE FONT -->
+  <!-- FONT -->
+
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- HTML2CANVAS -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <!-- JSPDF -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
@@ -28,8 +31,6 @@
 
       --black: #111;
       --gray: #666;
-      --border: #d7d7d7;
-      --light: #f7f7f7;
 
     }
 
@@ -37,7 +38,6 @@
 
       margin: 0;
       padding: 0;
-
       box-sizing: border-box;
 
       font-family: "Noto Sans Devanagari", sans-serif;
@@ -46,7 +46,7 @@
 
     body {
 
-      background: #dde4eb;
+      background: #dce4ea;
 
       padding: 25px;
 
@@ -54,15 +54,9 @@
 
     }
 
-    #pdf-content {
-
-      width: 100%;
-
-    }
-
-    /* =====================================
+    /* ===================================
        A4 PAGE
-    ===================================== */
+    =================================== */
 
     .page {
 
@@ -88,9 +82,9 @@
 
     }
 
-    /* =====================================
-       TOP LINE
-    ===================================== */
+    /* ===================================
+       TOP BAR
+    =================================== */
 
     .top-line {
 
@@ -106,9 +100,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        WATERMARK
-    ===================================== */
+    =================================== */
 
     .watermark {
 
@@ -129,17 +123,15 @@
 
       pointer-events: none;
 
-      user-select: none;
-
       white-space: nowrap;
 
       z-index: 0;
 
     }
 
-    /* =====================================
+    /* ===================================
        PAGE NUMBER
-    ===================================== */
+    =================================== */
 
     .page-number {
 
@@ -154,15 +146,15 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        HEADER
-    ===================================== */
+    =================================== */
 
     .header {
 
       text-align: center;
 
-      margin-bottom: 30px;
+      margin-bottom: 28px;
 
       position: relative;
 
@@ -172,11 +164,11 @@
 
     .header h1 {
 
-      font-size: 30px;
+      font-size: 28px;
 
       font-weight: 800;
 
-      margin-bottom: 10px;
+      margin-bottom: 8px;
 
     }
 
@@ -188,9 +180,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        PHOTO BOX
-    ===================================== */
+    =================================== */
 
     .photo-box {
 
@@ -199,7 +191,7 @@
       top: 18mm;
       right: 16mm;
 
-      width: 125px;
+      width: 120px;
 
       border: 1.5px solid #000;
 
@@ -230,7 +222,7 @@
 
       width: 100%;
 
-      height: 145px;
+      height: 140px;
 
       object-fit: cover;
 
@@ -276,9 +268,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        SECTION TITLE
-    ===================================== */
+    =================================== */
 
     .section-title {
 
@@ -286,7 +278,7 @@
 
       margin-bottom: 16px;
 
-      border-bottom: 1.7px solid #000;
+      border-bottom: 1.8px solid #000;
 
       padding-bottom: 6px;
 
@@ -300,9 +292,59 @@
 
     }
 
-    /* =====================================
-       FIELD
-    ===================================== */
+    /* ===================================
+       INLINE FIELD
+    =================================== */
+
+    .inline-field {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin-bottom: 16px;
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+    .inline-field label {
+
+      min-width: fit-content;
+
+      font-size: 13px;
+
+      font-weight: 600;
+
+      white-space: nowrap;
+
+    }
+
+    .inline-field input {
+
+      flex: 1;
+
+      border: none;
+
+      border-bottom: 1px dotted #777;
+
+      padding: 6px 4px;
+
+      font-size: 13px;
+
+      outline: none;
+
+      background: transparent;
+
+    }
+
+    /* ===================================
+       TEXTAREA FIELD
+    =================================== */
 
     .field {
 
@@ -312,17 +354,13 @@
 
       z-index: 2;
 
-      page-break-inside: avoid;
-
-      break-inside: avoid;
-
     }
 
     .field label {
 
       display: block;
 
-      margin-bottom: 5px;
+      margin-bottom: 6px;
 
       font-size: 13px;
 
@@ -330,7 +368,6 @@
 
     }
 
-    .field input,
     .field textarea {
 
       width: 100%;
@@ -345,21 +382,17 @@
 
       outline: none;
 
-      background: transparent;
-
       resize: none;
 
-    }
-
-    .field textarea {
+      background: transparent;
 
       min-height: 55px;
 
     }
 
-    /* =====================================
+    /* ===================================
        DOCUMENTS
-    ===================================== */
+    =================================== */
 
     .documents {
 
@@ -367,7 +400,7 @@
 
       grid-template-columns: repeat(2, 1fr);
 
-      gap: 14px;
+      gap: 12px;
 
       margin-top: 12px;
 
@@ -394,9 +427,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        LIST
-    ===================================== */
+    =================================== */
 
     ul {
 
@@ -420,9 +453,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        DECLARATION
-    ===================================== */
+    =================================== */
 
     .declaration {
 
@@ -436,13 +469,13 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        SIGNATURE
-    ===================================== */
+    =================================== */
 
     .signature {
 
-      margin-top: 30px;
+      margin-top: 28px;
 
     }
 
@@ -460,9 +493,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        FOOTER
-    ===================================== */
+    =================================== */
 
     .footer {
 
@@ -481,9 +514,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        DOWNLOAD BUTTON
-    ===================================== */
+    =================================== */
 
     .download-btn {
 
@@ -511,9 +544,9 @@
 
     }
 
-    /* =====================================
+    /* ===================================
        MOBILE
-    ===================================== */
+    =================================== */
 
     @media(max-width:900px) {
 
@@ -556,11 +589,31 @@
 
       }
 
+      .inline-field {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+      }
+
+      .inline-field label {
+
+        white-space: normal;
+
+      }
+
+      .inline-field input {
+
+        width: 100%;
+
+      }
+
     }
 
-    /* =====================================
+    /* ===================================
        PRINT
-    ===================================== */
+    =================================== */
 
     @media print {
 
@@ -594,413 +647,402 @@
 
 <body>
 
-  <div id="pdf-content">
+  <!-- ===================================
+       PAGE 1
+  =================================== -->
 
-    <!-- =====================================
-         PAGE 1
-    ====================================== -->
+  <section class="page">
 
-    <section class="page">
+    <div class="watermark">
+      ELECTRIC RIDERS
+    </div>
 
-      <div class="watermark">
-        ELECTRIC RIDERS
+    <div class="top-line"></div>
+
+    <div class="page-number">
+      1 | Page
+    </div>
+
+    <!-- PHOTO -->
+
+    <div class="photo-box">
+
+      <div class="photo-title">
+        ड्राइवर फोटो
       </div>
 
-      <div class="top-line"></div>
+      <video id="camera" autoplay playsinline></video>
 
-      <div class="page-number">
-        1 | Page
-      </div>
+      <canvas id="canvas"></canvas>
 
-      <!-- PHOTO -->
+      <img id="photoPreview">
 
-      <div class="photo-box">
+      <button class="capture-btn" onclick="capturePhoto()">
+        फोटो कैप्चर करें
+      </button>
 
-        <div class="photo-title">
-          ड्राइवर फोटो
-        </div>
+    </div>
 
-        <video id="camera" autoplay playsinline></video>
+    <!-- HEADER -->
 
-        <canvas id="canvas"></canvas>
+    <div class="header">
 
-        <img id="photoPreview">
+      <h1>
+        इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
+      </h1>
 
-        <button class="capture-btn" onclick="capturePhoto()">
-          फोटो कैप्चर करें
-        </button>
-
-      </div>
-
-      <!-- HEADER -->
-
-      <div class="header">
-
-        <h1>
-          इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
-        </h1>
-
-        <p>
-          सी – 13 / 122, आवास विकास कालोनी, राजाजीपुरम, लखनऊ
-        </p>
-
-      </div>
-
-      <!-- PERSONAL INFO -->
-
-      <div class="section-title">
-        व्यक्तिगत जानकारी :-
-      </div>
-
-      <div class="field">
-        <label>1. ड्राइवर का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>2. ड्राइवर का मोबाइल नम्बर :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>3. ड्राइवर का वर्तमान पता :</label>
-        <textarea></textarea>
-      </div>
-
-      <div class="field">
-        <label>4. ड्राइवर का स्थायी पता (आधार कार्ड के अनुसार)</label>
-        <textarea></textarea>
-      </div>
-
-      <div class="field">
-        <label>5. कार्य स्थल का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>6. ड्राइवर की आईडी :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>7. ड्राइवर की माताजी का नाम एवं मो नं :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>8. ड्राइवर की पिताजी का नाम एवं मो नं :</label>
-        <input type="text">
-      </div>
-
-      <!-- DOCUMENTS -->
-
-      <div class="section-title">
-        दस्तावेजों की सूची :-
-      </div>
-
-      <div class="documents">
-
-        <label><input type="checkbox"> A. आधार कार्ड</label>
-
-        <label><input type="checkbox"> B. पैन कार्ड</label>
-
-        <label><input type="checkbox"> C. वोटर कार्ड</label>
-
-        <label><input type="checkbox"> D. ड्राइविंग लाइसेंस</label>
-
-        <label><input type="checkbox"> E. पासपोर्ट</label>
-
-        <label><input type="checkbox"> F. चरित्र प्रमाण पत्र</label>
-
-      </div>
-
-      <div class="footer">
-        Electric Riders © 2026
-      </div>
-
-    </section>
-
-
-
-
-
-
-
-
-
-    <!-- =====================================
-         PAGE 2
-    ====================================== -->
-
-    <section class="page">
-
-      <div class="watermark">
-        ELECTRIC RIDERS
-      </div>
-
-      <div class="top-line"></div>
-
-      <div class="page-number">
-        2 | Page
-      </div>
-
-      <!-- GUARANTOR -->
-
-      <div class="section-title">
-        गारन्टर की जानकारी :-
-      </div>
-
-      <div class="field">
-        <label>1. गारन्टर का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>2. गारन्टर का मोबाइल नम्बर :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>3. गारन्टर का पता :</label>
-        <textarea></textarea>
-      </div>
-
-      <div class="field">
-        <label>4. ड्राइवर के दोस्त का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>5. ड्राइवर के दोस्त का मो नं :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>6. ड्राइवर के दोस्त का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>7. ड्राइवर के दोस्त का मो नं :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>8. परिवार के एक सदस्य का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>9. मोबाइल नम्बर :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>10. एक अन्य रिश्तेदार का नाम :</label>
-        <input type="text">
-      </div>
-
-      <div class="field">
-        <label>11. मोबाइल नम्बर :</label>
-        <input type="text">
-      </div>
-
-      <!-- DECLARATION -->
-
-      <div class="section-title">
-        घोषणा पत्र
-      </div>
-
-      <p class="declaration">
-
-        मैं शपथ लेता हूँ / लेती हूँ कि मैं इस इलेक्ट्रिक स्कूटर के संचालन द्वारा दिए गए सभी निर्देशों
-        और यातायात नियमों का पालन करूँगा / करूँगी। मैंने इस पंजीकरण फॉर्म में उल्लिखित सभी नियम व
-        शर्तों को अच्छी तरह से पढ़कर समझ लिया है और इनका पालन करूँगा / करूँगी।
-
+      <p>
+        सी – 13 / 122, आवास विकास कालोनी, राजाजीपुरम, लखनऊ
       </p>
 
-      <!-- SIGNATURE -->
+    </div>
 
-      <div class="signature">
+    <!-- PERSONAL -->
 
-        <label>
-          ड्राइवर के हस्ताक्षर :
-        </label>
+    <div class="section-title">
+      व्यक्तिगत जानकारी :-
+    </div>
 
-        <div class="signature-box"></div>
+    <div class="inline-field">
+      <label>1. ड्राइवर का नाम :</label>
+      <input type="text">
+    </div>
 
-      </div>
+    <div class="inline-field">
+      <label>2. ड्राइवर का मोबाइल नम्बर :</label>
+      <input type="text">
+    </div>
 
-      <div class="footer">
-        Electric Riders © 2026
-      </div>
+    <div class="field">
+      <label>3. ड्राइवर का वर्तमान पता :</label>
+      <textarea></textarea>
+    </div>
 
-    </section>
+    <div class="field">
+      <label>4. ड्राइवर का स्थायी पता (आधार कार्ड के अनुसार)</label>
+      <textarea></textarea>
+    </div>
 
+    <div class="inline-field">
+      <label>5. कार्य स्थल का नाम :</label>
+      <input type="text">
+    </div>
 
+    <div class="inline-field">
+      <label>6. ड्राइवर की आईडी :</label>
+      <input type="text">
+    </div>
 
+    <div class="inline-field">
+      <label>7. ड्राइवर की माताजी का नाम एवं मो नं :</label>
+      <input type="text">
+    </div>
 
+    <div class="inline-field">
+      <label>8. ड्राइवर की पिताजी का नाम एवं मो नं :</label>
+      <input type="text">
+    </div>
 
+    <!-- DOCUMENTS -->
 
+    <div class="section-title">
+      दस्तावेजों की सूची :-
+    </div>
 
+    <div class="documents">
 
+      <label><input type="checkbox"> A. आधार कार्ड</label>
 
-    <!-- =====================================
-         PAGE 3
-    ====================================== -->
+      <label><input type="checkbox"> B. पैन कार्ड</label>
 
-    <section class="page">
+      <label><input type="checkbox"> C. वोटर कार्ड</label>
 
-      <div class="watermark">
-        ELECTRIC RIDERS
-      </div>
+      <label><input type="checkbox"> D. ड्राइविंग लाइसेंस</label>
 
-      <div class="top-line"></div>
+      <label><input type="checkbox"> E. पासपोर्ट</label>
 
-      <div class="page-number">
-        3 | Page
-      </div>
+      <label><input type="checkbox"> F. चरित्र प्रमाण पत्र</label>
 
-      <!-- DRIVER INFO -->
+    </div>
 
-      <div class="section-title">
-        ड्राइवर को दी गयी जानकारी
-      </div>
+    <div class="footer">
+      Electric Riders © 2026
+    </div>
 
-      <div class="field">
-        <label>• बैटरी स्मार्ट की ड्राइवर आईडी –</label>
-        <input type="text">
-      </div>
+  </section>
 
-      <div class="field">
-        <label>• गाड़ी का चेसिस नम्बर –</label>
-        <input type="text">
-      </div>
 
-      <div class="field">
-        <label>• सिक्योरिटी राशि –</label>
-        <input type="text">
-      </div>
 
-      <div class="field">
-        <label>• गाड़ी निर्गत होने की तारीख –</label>
-        <input type="text">
-      </div>
 
-      <div class="field">
-        <label>• किराये का प्लान –</label>
-        <input type="text">
-      </div>
 
-      <!-- RETURN INFO -->
 
-      <div class="section-title">
-        गाड़ी वापसी के समय दी जाने वाली जानकारी
-      </div>
 
-      <ul>
 
-        <li>अतिरिक्त छुट्टी पर पेनाल्टी</li>
 
-        <li>किराये की पेनाल्टी</li>
+  <!-- ===================================
+       PAGE 2
+  =================================== -->
 
-        <li>बकाया किराया</li>
+  <section class="page">
 
-        <li>गाड़ी डैमेज (टूट–फूट) का भुगतान</li>
+    <div class="watermark">
+      ELECTRIC RIDERS
+    </div>
 
-        <li>कुल वास्तविक वापसी</li>
+    <div class="top-line"></div>
 
-      </ul>
+    <div class="page-number">
+      2 | Page
+    </div>
 
-      <!-- RULES -->
+    <!-- GUARANTOR -->
 
-      <div class="section-title">
-        नियम और शर्तें
-      </div>
+    <div class="section-title">
+      गारन्टर की जानकारी :-
+    </div>
 
-      <ul>
+    <div class="inline-field">
+      <label>1. गारन्टर का नाम :</label>
+      <input type="text">
+    </div>
 
-        <li>आधार कार्ड अनिवार्य है।</li>
+    <div class="inline-field">
+      <label>2. गारन्टर का मोबाइल नम्बर :</label>
+      <input type="text">
+    </div>
 
-        <li>पेन कार्ड / वोटर ID / ड्राइविंग लाइसेंस में से कोई दस्तावेज अनिवार्य है।</li>
+    <div class="field">
+      <label>3. गारन्टर का पता :</label>
+      <textarea></textarea>
+    </div>
 
-        <li>सिक्योरिटी जमा राशि ₹2500 होगी।</li>
+    <div class="inline-field">
+      <label>4. ड्राइवर के दोस्त का नाम :</label>
+      <input type="text">
+    </div>
 
-        <li>बैटरी के सभी स्वैप ₹70 के होंगे।</li>
+    <div class="inline-field">
+      <label>5. ड्राइवर के दोस्त का मो नं :</label>
+      <input type="text">
+    </div>
 
-        <li>दैनिक किराया ₹99 प्रतिदिन है।</li>
+    <div class="inline-field">
+      <label>6. ड्राइवर के दोस्त का नाम :</label>
+      <input type="text">
+    </div>
 
-      </ul>
+    <div class="inline-field">
+      <label>7. ड्राइवर के दोस्त का मो नं :</label>
+      <input type="text">
+    </div>
 
-      <div class="footer">
-        Electric Riders © 2026
-      </div>
+    <div class="inline-field">
+      <label>8. परिवार के एक सदस्य का नाम :</label>
+      <input type="text">
+    </div>
 
-    </section>
+    <div class="inline-field">
+      <label>9. मोबाइल नम्बर :</label>
+      <input type="text">
+    </div>
 
+    <div class="inline-field">
+      <label>10. एक अन्य रिश्तेदार का नाम :</label>
+      <input type="text">
+    </div>
 
+    <div class="inline-field">
+      <label>11. मोबाइल नम्बर :</label>
+      <input type="text">
+    </div>
 
+    <!-- DECLARATION -->
 
+    <div class="section-title">
+      घोषणा पत्र
+    </div>
 
+    <p class="declaration">
 
+      मैं शपथ लेता हूँ / लेती हूँ कि मैं इस इलेक्ट्रिक स्कूटर के संचालन द्वारा दिए गए सभी निर्देशों
+      और यातायात नियमों का पालन करूँगा / करूँगी। मैंने इस पंजीकरण फॉर्म में उल्लिखित सभी नियम व
+      शर्तों को अच्छी तरह से पढ़कर समझ लिया है और इनका पालन करूँगा / करूँगी।
 
+    </p>
 
+    <!-- SIGNATURE -->
 
-    <!-- =====================================
-         PAGE 4
-    ====================================== -->
+    <div class="signature">
 
-    <section class="page">
+      <label>
+        ड्राइवर के हस्ताक्षर :
+      </label>
 
-      <div class="watermark">
-        ELECTRIC RIDERS
-      </div>
+      <div class="signature-box"></div>
 
-      <div class="top-line"></div>
+    </div>
 
-      <div class="page-number">
-        4 | Page
-      </div>
+    <div class="footer">
+      Electric Riders © 2026
+    </div>
 
-      <div class="section-title">
-        अतिरिक्त नियम और जिम्मेदारियाँ
-      </div>
+  </section>
 
-      <ul>
 
-        <li>हेलमेट पहनना व सड़क पर ट्रैफिक नियमों का पालन करना अनिवार्य है।</li>
 
-        <li>स्कूटर तय तारीख पर सही स्थिति में लौटाना होगा।</li>
 
-        <li>किसी भी नुकसान की तुरन्त जानकारी देना अनिवार्य है।</li>
 
-        <li>15 दिन से अधिक किराया बकाया होने पर F.I.R. होगी।</li>
 
-        <li>हर महीने मेंटेनेंस के लिए ऑफिस आना आवश्यक है।</li>
 
-        <li>अधिक छुट्टी लेने पर ₹60 प्रतिदिन पेनाल्टी लगेगी।</li>
 
-        <li>स्कूटर इलेक्ट्रिक राइडर्स की सम्पत्ति है।</li>
 
-      </ul>
+  <!-- ===================================
+       PAGE 3
+  =================================== -->
 
-      <div class="signature">
+  <section class="page">
 
-        <label>
-          ड्राइवर के हस्ताक्षर :
-        </label>
+    <div class="watermark">
+      ELECTRIC RIDERS
+    </div>
 
-        <div class="signature-box"></div>
+    <div class="top-line"></div>
 
-      </div>
+    <div class="page-number">
+      3 | Page
+    </div>
 
-      <div class="footer">
-        Electric Riders © 2026
-      </div>
+    <!-- DRIVER INFO -->
 
-    </section>
+    <div class="section-title">
+      ड्राइवर को दी गयी जानकारी
+    </div>
 
-  </div>
+    <div class="inline-field">
+      <label>• बैटरी स्मार्ट की ड्राइवर आईडी –</label>
+      <input type="text">
+    </div>
+
+    <div class="inline-field">
+      <label>• गाड़ी का चेसिस नम्बर –</label>
+      <input type="text">
+    </div>
+
+    <div class="inline-field">
+      <label>• सिक्योरिटी राशि –</label>
+      <input type="text">
+    </div>
+
+    <div class="inline-field">
+      <label>• गाड़ी निर्गत होने की तारीख –</label>
+      <input type="text">
+    </div>
+
+    <div class="inline-field">
+      <label>• किराये का प्लान –</label>
+      <input type="text">
+    </div>
+
+    <!-- RETURN -->
+
+    <div class="section-title">
+      गाड़ी वापसी के समय दी जाने वाली जानकारी
+    </div>
+
+    <ul>
+
+      <li>अतिरिक्त छुट्टी पर पेनाल्टी</li>
+
+      <li>किराये की पेनाल्टी</li>
+
+      <li>बकाया किराया</li>
+
+      <li>गाड़ी डैमेज (टूट–फूट) का भुगतान</li>
+
+      <li>कुल वास्तविक वापसी</li>
+
+    </ul>
+
+    <!-- RULES -->
+
+    <div class="section-title">
+      नियम और शर्तें
+    </div>
+
+    <ul>
+
+      <li>आधार कार्ड अनिवार्य है।</li>
+
+      <li>दैनिक किराया ₹99 प्रतिदिन है।</li>
+
+      <li>साप्ताहिक किराया ₹763 प्रति सप्ताह।</li>
+
+      <li>बैटरी स्वैप ₹70 प्रति स्वैप होगा।</li>
+
+      <li>सिक्योरिटी राशि ₹2500 होगी।</li>
+
+    </ul>
+
+    <div class="footer">
+      Electric Riders © 2026
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
+
+  <!-- ===================================
+       PAGE 4
+  =================================== -->
+
+  <section class="page">
+
+    <div class="watermark">
+      ELECTRIC RIDERS
+    </div>
+
+    <div class="top-line"></div>
+
+    <div class="page-number">
+      4 | Page
+    </div>
+
+    <div class="section-title">
+      अतिरिक्त नियम और जिम्मेदारियाँ
+    </div>
+
+    <ul>
+
+      <li>हेलमेट पहनना व ट्रैफिक नियमों का पालन अनिवार्य है।</li>
+
+      <li>स्कूटर सही स्थिति में लौटाना आवश्यक होगा।</li>
+
+      <li>15 दिन से अधिक किराया बकाया होने पर F.I.R. होगी।</li>
+
+      <li>अधिक छुट्टी लेने पर ₹60 प्रतिदिन पेनाल्टी लगेगी।</li>
+
+      <li>स्कूटर इलेक्ट्रिक राइडर्स की सम्पत्ति है।</li>
+
+    </ul>
+
+    <div class="signature">
+
+      <label>
+        ड्राइवर के हस्ताक्षर :
+      </label>
+
+      <div class="signature-box"></div>
+
+    </div>
+
+  </section>
+
 
 
 
@@ -1024,11 +1066,12 @@
 
 
 
+
   <script>
 
-    /* =====================================
-       CAMERA ACCESS
-    ===================================== */
+    /* ===================================
+       CAMERA
+    =================================== */
 
     const video =
       document.getElementById("camera");
@@ -1069,9 +1112,9 @@
 
 
 
-    /* =====================================
+    /* ===================================
        CAPTURE PHOTO
-    ===================================== */
+    =================================== */
 
     function capturePhoto() {
 
@@ -1123,9 +1166,9 @@
 
 
 
-    /* =====================================
+    /* ===================================
        PROFESSIONAL PDF EXPORT
-    ===================================== */
+    =================================== */
 
     async function downloadPDF() {
 
@@ -1151,13 +1194,10 @@
 
       for (let i = 0; i < pages.length; i++) {
 
-        const page =
-          pages[i];
-
         const canvas =
           await html2canvas(
 
-            page, {
+            pages[i], {
 
               scale: 3,
 
@@ -1167,9 +1207,7 @@
 
               logging: false,
 
-              letterRendering: true,
-
-              allowTaint: true
+              letterRendering: true
 
             }
 
@@ -1180,10 +1218,6 @@
             "image/jpeg",
             1.0
           );
-
-        const pdfWidth = 210;
-
-        const pdfHeight = 297;
 
         if (i > 0) {
 
@@ -1201,9 +1235,9 @@
 
           0,
 
-          pdfWidth,
+          210,
 
-          pdfHeight,
+          297,
 
           "",
 
@@ -1214,7 +1248,7 @@
       }
 
       pdf.save(
-        "Electric-Riders-Registration-Form.pdf"
+        "Electric-Riders-Registration.pdf"
       );
 
     }
