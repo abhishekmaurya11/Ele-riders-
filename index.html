@@ -172,7 +172,7 @@
 
     /* =========================================
        PHOTO
-    ========================================== */
+    ========================================= */
 
     .photo-wrapper {
 
@@ -257,8 +257,56 @@
     }
 
     /* =========================================
+       CAMERA TOGGLE BUTTONS
+    ========================================= */
+
+    .camera-toggle-row {
+
+      display: flex;
+
+      gap: 6px;
+
+      margin-top: 8px;
+
+    }
+
+    .camera-toggle-row button {
+
+      flex: 1;
+
+      padding: 8px 0;
+
+      border: 2px solid #000;
+
+      background: #fff;
+
+      color: #000;
+
+      border-radius: 8px;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      font-family:
+        "Noto Sans Devanagari",
+        sans-serif;
+
+    }
+
+    .camera-toggle-row button.active-cam {
+
+      background: #000;
+
+      color: #fff;
+
+    }
+
+    /* =========================================
        HEADER
-    ========================================== */
+    ========================================= */
 
     .header {
 
@@ -292,7 +340,7 @@
 
     /* =========================================
        TITLES
-    ========================================== */
+    ========================================= */
 
     .section-title {
 
@@ -324,7 +372,7 @@
 
     /* =========================================
        FIELD INLINE
-    ========================================== */
+    ========================================= */
 
     .field-inline {
 
@@ -358,7 +406,7 @@
 
     /* =========================================
        THREE INPUT LINES
-    ========================================== */
+    ========================================= */
 
     .triple-line {
 
@@ -397,7 +445,7 @@
 
     /* =========================================
        DOCUMENTS
-    ========================================== */
+    ========================================= */
 
     .documents-grid {
 
@@ -435,7 +483,7 @@
 
     /* =========================================
        DECLARATION
-    ========================================== */
+    ========================================= */
 
     .declaration {
 
@@ -451,7 +499,7 @@
 
     /* =========================================
        SIGNATURE
-    ========================================== */
+    ========================================= */
 
     .signature-line {
 
@@ -488,7 +536,7 @@
 
     /* =========================================
        LISTS
-    ========================================== */
+    ========================================= */
 
     .info-list {
 
@@ -531,7 +579,7 @@
 
     /* =========================================
        RULES
-    ========================================== */
+    ========================================= */
 
     .main-heading {
 
@@ -627,7 +675,7 @@
 
     /* =========================================
        BUTTON
-    ========================================== */
+    ========================================= */
 
     .download-btn {
 
@@ -657,7 +705,7 @@
 
     /* =========================================
        MOBILE
-    ========================================== */
+    ========================================= */
 
     @media(max-width:900px){
 
@@ -711,7 +759,7 @@
 
     /* =========================================
        PRINT
-    ========================================== */
+    ========================================= */
 
     @media print {
 
@@ -732,7 +780,9 @@
       }
 
       .download-btn,
-      .capture-btn {
+      .capture-btn,
+      .camera-toggle-row,
+      .refresh-btn {
 
         display: none;
 
@@ -786,6 +836,22 @@ PAGE 1
       >
         फोटो कैप्चर
       </button>
+
+      <div class="camera-toggle-row">
+        <button
+          id="btnFrontCam"
+          class="active-cam"
+          onclick="switchCamera('user')"
+        >
+          अगला कैमरा
+        </button>
+        <button
+          id="btnBackCam"
+          onclick="switchCamera('environment')"
+        >
+          पीछे का कैमरा
+        </button>
+      </div>
 
     </div>
 
@@ -1392,13 +1458,20 @@ PAGE 4
 
 </div>
 
-<!-- DOWNLOAD BUTTON -->
+<!-- BUTTONS -->
 
 <button
   class="download-btn"
   onclick="downloadPDF()"
 >
   PDF डाउनलोड करें
+</button>
+
+<button
+  class="download-btn refresh-btn"
+  onclick="forceRefreshForm()"
+>
+  फॉर्म रिफ्रेश करें
 </button>
 
 <!-- =========================================
@@ -1416,9 +1489,48 @@ const canvas =
 const preview =
   document.getElementById("photoPreview");
 
-/* CAMERA */
+const btnFrontCam =
+  document.getElementById("btnFrontCam");
 
-async function startCamera() {
+const btnBackCam =
+  document.getElementById("btnBackCam");
+
+/* वर्तमान कैमरा स्ट्रीम */
+let currentStream = null;
+
+/* कैमरा शुरू हो चुका है या नहीं */
+let cameraStarted = false;
+
+/* =========================================
+   ब्राउज़र रिफ्रेश ब्लॉक करो
+========================================= */
+
+window.addEventListener("beforeunload", function(e) {
+
+  e.preventDefault();
+
+  e.returnValue = "";
+
+  return "";
+
+});
+
+/* =========================================
+   कैमरा शुरू करो - सिर्फ बटन दबाने पर
+========================================= */
+
+async function startCamera(facingMode) {
+
+  /* पुराना स्ट्रीम बंद करो */
+  if (currentStream) {
+
+    currentStream.getTracks().forEach(function(track) {
+
+      track.stop();
+
+    });
+
+  }
 
   try {
 
@@ -1426,7 +1538,7 @@ async function startCamera() {
       await navigator.mediaDevices.getUserMedia({
 
         video: {
-          facingMode: "user",
+          facingMode: facingMode,
           width: {
             ideal: 1280
           },
@@ -1439,25 +1551,61 @@ async function startCamera() {
 
       });
 
+    currentStream = stream;
+
     video.srcObject = stream;
+
+    video.style.display = "block";
+
+    preview.style.display = "none";
+
+    cameraStarted = true;
 
   }
 
   catch (error) {
 
-    alert(
-      "कैमरा एक्सेस नहीं मिला"
-    );
+    alert("कैमरा एक्सेस नहीं मिला");
 
   }
 
 }
 
-startCamera();
+/* कैमरा स्विच करने का फंक्शन */
+function switchCamera(facingMode) {
 
-/* PHOTO */
+  btnFrontCam.classList.remove("active-cam");
+
+  btnBackCam.classList.remove("active-cam");
+
+  if (facingMode === "user") {
+
+    btnFrontCam.classList.add("active-cam");
+
+  } else {
+
+    btnBackCam.classList.add("active-cam");
+
+  }
+
+  startCamera(facingMode);
+
+}
+
+/* =========================================
+   फोटो कैप्चर
+========================================= */
 
 function capturePhoto() {
+
+  /* अगर कैमरा शुरू नहीं हुआ तो पहले शुरू करो */
+  if (!cameraStarted) {
+
+    alert("पहले कैमरा बटन दबाएं");
+
+    return;
+
+  }
 
   const context =
     canvas.getContext("2d");
@@ -1493,7 +1641,77 @@ function capturePhoto() {
 
 }
 
-/* PDF */
+/* =========================================
+   फोर्स रिफ्रेश - यही एकमात्र तरीका है
+========================================= */
+
+function forceRefreshForm() {
+
+  /* सभी टेक्स्ट इनपुट खाली करो */
+  var allInputs =
+    document.querySelectorAll("input[type='text']");
+
+  allInputs.forEach(function(input) {
+
+    input.value = "";
+
+  });
+
+  /* सभी चेकबॉक्स अनचेक करो */
+  var allCheckboxes =
+    document.querySelectorAll("input[type='checkbox']");
+
+  allCheckboxes.forEach(function(cb) {
+
+    cb.checked = false;
+
+  });
+
+  /* फोटो प्रीव्यू हटाओ */
+  preview.style.display = "none";
+
+  preview.src = "";
+
+  /* कैमरा स्ट्रीम बंद करो */
+  if (currentStream) {
+
+    currentStream.getTracks().forEach(function(track) {
+
+      track.stop();
+
+    });
+
+    currentStream = null;
+
+  }
+
+  video.srcObject = null;
+
+  video.style.display = "block";
+
+  cameraStarted = false;
+
+  /* फ्रंट कैमरा बटन एक्टिव */
+  btnFrontCam.classList.add("active-cam");
+
+  btnBackCam.classList.remove("active-cam");
+
+  /* फ्रेश कैमरा शुरू करो */
+  startCamera("user");
+
+}
+
+/* =========================================
+   पेज लोड पर कैमरा ऑटो शुरू नहीं
+========================================= */
+
+/* startCamera("user") को हटा दिया गया -
+   अब कैमरा सिर्फ रिफ्रेश बटन दबाने पर
+   या कैमरा स्विच बटन दबाने पर शुरू होगा */
+
+/* =========================================
+   PDF डाउनलोड
+========================================= */
 
 async function downloadPDF() {
 
@@ -1538,7 +1756,7 @@ async function downloadPDF() {
     const page =
       pages[i];
 
-    const canvas =
+    const pageCanvas =
       await html2canvas(page, {
 
         scale: 3,
@@ -1557,7 +1775,7 @@ async function downloadPDF() {
       });
 
     const image =
-      canvas.toDataURL(
+      pageCanvas.toDataURL(
         "image/jpeg",
         1.0
       );
