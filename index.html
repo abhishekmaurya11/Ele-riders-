@@ -83,7 +83,7 @@
 
     /* =========================================
        PAGE
-    ========================================= */
+    ========================================== */
 
     .page {
 
@@ -704,100 +704,8 @@
     }
 
     /* =========================================
-       BLOCK OVERLAY (रिफ्रेश ब्लॉक स्क्रीन)
-    ========================================= */
-
-    .block-overlay {
-
-      position: fixed;
-
-      top: 0;
-      left: 0;
-
-      width: 100%;
-      height: 100%;
-
-      background: #dfe5ec;
-
-      z-index: 999999;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-    }
-
-    .block-overlay .block-box {
-
-      text-align: center;
-
-      background: #fff;
-
-      padding: 50px 40px;
-
-      border-radius: 16px;
-
-      border: 2px solid #000;
-
-      max-width: 480px;
-
-      width: 90%;
-
-    }
-
-    .block-overlay .block-box h2 {
-
-      font-size: 26px;
-
-      font-weight: 800;
-
-      margin-bottom: 14px;
-
-    }
-
-    .block-overlay .block-box p {
-
-      font-size: 16px;
-
-      color: #555;
-
-      line-height: 1.8;
-
-    }
-
-    .block-overlay .block-box .go-back-btn {
-
-      display: inline-block;
-
-      margin-top: 28px;
-
-      padding: 14px 36px;
-
-      background: #000;
-
-      color: #fff;
-
-      border: none;
-
-      border-radius: 10px;
-
-      font-size: 16px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      font-family:
-        "Noto Sans Devanagari",
-        sans-serif;
-
-    }
-
-    /* =========================================
        MOBILE
-    ========================================== */
+    ========================================= */
 
     @media(max-width:900px){
 
@@ -888,24 +796,6 @@
 
 <body>
 
-<!-- =========================================
-     ब्राउज़र रिफ्रेश ब्लॉक स्क्रीन
-     (सिर्फ तब दिखेगी जब ब्राउज़र
-      रिफ्रेश हो, नॉर्मल लोड पर नहीं)
-========================================= -->
-<div class="block-overlay" id="blockOverlay" style="display:none;">
-  <div class="block-box">
-    <h2>रिफ्रेश अनुमति नहीं है</h2>
-    <p>
-      ब्राउज़र से रिफ्रेश करने पर फॉर्म का डेटा खो जाएगा।<br>
-      कृपया नीचे दिए गए बटन से फॉर्म रिफ्रेश करें।
-    </p>
-    <button class="go-back-btn" onclick="goBackToForm()">
-      वापस फॉर्म पर जाएं
-    </button>
-  </div>
-</div>
-
 <div id="pdf-content">
 
 <!-- =========================================
@@ -986,6 +876,8 @@ PAGE 1
   <div class="section-title">
     व्यक्तिगत जानकारी :-
   </div>
+
+  <!-- REPEATABLE FIELD -->
 
   <div class="field-inline">
     <label>1. ड्राइवर का नाम :</label>
@@ -1129,6 +1021,8 @@ PAGE 2
     गारन्टर की जानकारी :-
   </div>
 
+  <!-- GUARANTOR FIELDS -->
+
   <div class="field-inline">
     <label>1. गारन्टर का नाम :</label>
     <div class="triple-line">
@@ -1217,6 +1111,8 @@ PAGE 2
      
     </div>
   </div>
+
+  <!-- DECLARATION -->
 
   <div class="section-title center">
     घोषणा पत्र
@@ -1352,6 +1248,8 @@ PAGE 4
     नियम और शर्तें
   </div>
 
+  <!-- RULE 1 -->
+
   <div class="rules-section">
 
     <h3>
@@ -1375,6 +1273,8 @@ PAGE 4
     </ul>
 
   </div>
+
+  <!-- RULE 2 -->
 
   <div class="rules-section">
 
@@ -1408,6 +1308,8 @@ PAGE 4
 
   </div>
 
+  <!-- RULE 3 -->
+
   <div class="rules-section">
 
     <h3>
@@ -1423,6 +1325,8 @@ PAGE 4
     </ul>
 
   </div>
+
+  <!-- RULE 4 -->
 
   <div class="rules-section">
 
@@ -1448,6 +1352,8 @@ PAGE 4
 
   </div>
 
+  <!-- RULE 5 -->
+
   <div class="rules-section">
 
     <h3>
@@ -1468,6 +1374,8 @@ PAGE 4
 
   </div>
 
+  <!-- RULE 6 -->
+
   <div class="rules-section">
 
     <h3>
@@ -1487,6 +1395,8 @@ PAGE 4
     </ul>
 
   </div>
+
+  <!-- RULE 7 -->
 
   <div class="rules-section">
 
@@ -1528,6 +1438,8 @@ PAGE 4
 
   </div>
 
+  <!-- SIGNATURE -->
+
   <div class="signature-line">
 
     <span>
@@ -1568,73 +1480,6 @@ SCRIPT
 
 <script>
 
-/* =========================================
-   ब्राउज़र रिफ्रेश पहचानो और ब्लॉक करो
-========================================= */
-
-(function() {
-
-  var alreadyLoaded =
-    sessionStorage.getItem("erFormLoaded");
-
-  if (alreadyLoaded === "true") {
-
-    /* यह ब्राउज़र रिफ्रेश है — ब्लॉक स्क्रीन दिखाओ */
-    document.getElementById("blockOverlay")
-      .style.display = "flex";
-
-    document.getElementById("pdf-content")
-      .style.display = "none";
-
-    /* सभी बटन छुपाओ */
-    var btns =
-      document.querySelectorAll(
-        ".download-btn"
-      );
-
-    btns.forEach(function(b) {
-
-      b.style.display = "none";
-
-    });
-
-    return;
-
-  }
-
-  /* पहली बार लोड — फ्लैग सेट करो */
-  sessionStorage.setItem("erFormLoaded", "true");
-
-})();
-
-/* ब्लॉक स्क्रीन से वापस जाने का बटन */
-function goBackToForm() {
-
-  /* फ्लैग रीसेट नहीं करेंगे —
-     ताकि अगला रिफ्रेश भी ब्लॉक हो */
-  document.getElementById("blockOverlay")
-    .style.display = "none";
-
-  document.getElementById("pdf-content")
-    .style.display = "block";
-
-  var btns =
-    document.querySelectorAll(
-      ".download-btn"
-    );
-
-  btns.forEach(function(b) {
-
-    b.style.display = "block";
-
-  });
-
-}
-
-/* =========================================
-   कैमरा वेरिएबल्स
-========================================= */
-
 const video =
   document.getElementById("camera");
 
@@ -1650,21 +1495,40 @@ const btnFrontCam =
 const btnBackCam =
   document.getElementById("btnBackCam");
 
+/* वर्तमान कैमरा स्ट्रीम */
 let currentStream = null;
 
+/* कैमरा शुरू हो चुका है या नहीं */
 let cameraStarted = false;
 
 /* =========================================
-   कैमरा शुरू करो
+   ब्राउज़र रिफ्रेश ब्लॉक करो
+========================================= */
+
+window.addEventListener("beforeunload", function(e) {
+
+  e.preventDefault();
+
+  e.returnValue = "";
+
+  return "";
+
+});
+
+/* =========================================
+   कैमरा शुरू करो - सिर्फ बटन दबाने पर
 ========================================= */
 
 async function startCamera(facingMode) {
 
+  /* पुराना स्ट्रीम बंद करो */
   if (currentStream) {
 
-    currentStream.getTracks().forEach(
-      function(track) { track.stop(); }
-    );
+    currentStream.getTracks().forEach(function(track) {
+
+      track.stop();
+
+    });
 
   }
 
@@ -1675,8 +1539,12 @@ async function startCamera(facingMode) {
 
         video: {
           facingMode: facingMode,
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          width: {
+            ideal: 1280
+          },
+          height: {
+            ideal: 720
+          }
         },
 
         audio: false
@@ -1703,7 +1571,7 @@ async function startCamera(facingMode) {
 
 }
 
-/* कैमरा स्विच */
+/* कैमरा स्विच करने का फंक्शन */
 function switchCamera(facingMode) {
 
   btnFrontCam.classList.remove("active-cam");
@@ -1724,18 +1592,16 @@ function switchCamera(facingMode) {
 
 }
 
-/* पेज लोड पर कैमरा ऑटो शुरू */
-startCamera("user");
-
 /* =========================================
    फोटो कैप्चर
 ========================================= */
 
 function capturePhoto() {
 
+  /* अगर कैमरा शुरू नहीं हुआ तो पहले शुरू करो */
   if (!cameraStarted) {
 
-    alert("पहले कैमरा शुरू करें");
+    alert("पहले कैमरा बटन दबाएं");
 
     return;
 
@@ -1744,77 +1610,104 @@ function capturePhoto() {
   const context =
     canvas.getContext("2d");
 
-  canvas.width = video.videoWidth;
+  canvas.width =
+    video.videoWidth;
 
-  canvas.height = video.videoHeight;
+  canvas.height =
+    video.videoHeight;
 
   context.drawImage(
-    video, 0, 0,
-    canvas.width, canvas.height
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
   );
 
+  const imageData =
+    canvas.toDataURL(
+      "image/jpeg",
+      1
+    );
+
   preview.src =
-    canvas.toDataURL("image/jpeg", 1);
+    imageData;
 
-  preview.style.display = "block";
+  preview.style.display =
+    "block";
 
-  video.style.display = "none";
+  video.style.display =
+    "none";
 
 }
 
 /* =========================================
-   फॉर्म रिफ्रेश — सिर्फ यही तरीका
+   फोर्स रिफ्रेश - यही एकमात्र तरीका है
 ========================================= */
 
 function forceRefreshForm() {
 
-  /* सभी टेक्स्ट इनपुट खाली */
-  document.querySelectorAll(
-    "input[type='text']"
-  ).forEach(function(input) {
+  /* सभी टेक्स्ट इनपुट खाली करो */
+  var allInputs =
+    document.querySelectorAll("input[type='text']");
+
+  allInputs.forEach(function(input) {
 
     input.value = "";
 
   });
 
-  /* सभी चेकबॉक्स अनचेक */
-  document.querySelectorAll(
-    "input[type='checkbox']"
-  ).forEach(function(cb) {
+  /* सभी चेकबॉक्स अनचेक करो */
+  var allCheckboxes =
+    document.querySelectorAll("input[type='checkbox']");
+
+  allCheckboxes.forEach(function(cb) {
 
     cb.checked = false;
 
   });
 
-  /* फोटो हटाओ */
+  /* फोटो प्रीव्यू हटाओ */
   preview.style.display = "none";
 
   preview.src = "";
 
-  video.style.display = "block";
-
-  /* पुराना स्ट्रीम बंद */
+  /* कैमरा स्ट्रीम बंद करो */
   if (currentStream) {
 
-    currentStream.getTracks().forEach(
-      function(track) { track.stop(); }
-    );
+    currentStream.getTracks().forEach(function(track) {
+
+      track.stop();
+
+    });
 
     currentStream = null;
 
   }
 
+  video.srcObject = null;
+
+  video.style.display = "block";
+
   cameraStarted = false;
 
-  /* फ्रंट कैमरा एक्टिव */
+  /* फ्रंट कैमरा बटन एक्टिव */
   btnFrontCam.classList.add("active-cam");
 
   btnBackCam.classList.remove("active-cam");
 
-  /* फ्रेश कैमरा शुरू */
+  /* फ्रेश कैमरा शुरू करो */
   startCamera("user");
 
 }
+
+/* =========================================
+   पेज लोड पर कैमरा ऑटो शुरू नहीं
+========================================= */
+
+/* startCamera("user") को हटा दिया गया -
+   अब कैमरा सिर्फ रिफ्रेश बटन दबाने पर
+   या कैमरा स्विच बटन दबाने पर शुरू होगा */
 
 /* =========================================
    PDF डाउनलोड
@@ -1823,40 +1716,55 @@ function forceRefreshForm() {
 async function downloadPDF() {
 
   const button =
-    document.querySelector(".download-btn");
+    document.querySelector(
+      ".download-btn"
+    );
 
   button.innerHTML =
     "PDF तैयार हो रही है...";
 
   button.disabled = true;
 
-  const { jsPDF } = window.jspdf;
+  const {
+    jsPDF
+  } = window.jspdf;
 
-  const pdf = new jsPDF({
+  const pdf =
+    new jsPDF({
 
-    orientation: "portrait",
+      orientation: "portrait",
 
-    unit: "mm",
+      unit: "mm",
 
-    format: "a4",
+      format: "a4",
 
-    compress: true
+      compress: true
 
-  });
+    });
 
   const pages =
-    document.querySelectorAll(".page");
+    document.querySelectorAll(
+      ".page"
+    );
 
-  for (let i = 0; i < pages.length; i++) {
+  for (
+    let i = 0;
+    i < pages.length;
+    i++
+  ) {
+
+    const page =
+      pages[i];
 
     const pageCanvas =
-      await html2canvas(pages[i], {
+      await html2canvas(page, {
 
         scale: 3,
 
         useCORS: true,
 
-        backgroundColor: "#ffffff",
+        backgroundColor:
+          "#ffffff",
 
         logging: false,
 
@@ -1867,13 +1775,35 @@ async function downloadPDF() {
       });
 
     const image =
-      pageCanvas.toDataURL("image/jpeg", 1.0);
+      pageCanvas.toDataURL(
+        "image/jpeg",
+        1.0
+      );
 
-    if (i > 0) pdf.addPage();
+    if (i > 0) {
+
+      pdf.addPage();
+
+    }
 
     pdf.addImage(
-      image, "JPEG",
-      0, 0, 210, 297, "", "FAST"
+
+      image,
+
+      "JPEG",
+
+      0,
+
+      0,
+
+      210,
+
+      297,
+
+      "",
+
+      "FAST"
+
     );
 
   }
@@ -1882,9 +1812,11 @@ async function downloadPDF() {
     "Electric-Riders-Registration-Form.pdf"
   );
 
-  button.innerHTML = "PDF डाउनलोड करें";
+  button.innerHTML =
+    "PDF डाउनलोड करें";
 
-  button.disabled = false;
+  button.disabled =
+    false;
 
 }
 
