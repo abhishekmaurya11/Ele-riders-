@@ -3,1824 +3,2106 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <title>इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म</title>
 
-  <title>
-    इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
-  </title>
+    <!-- =========================================
+    GOOGLE FONT
+    ========================================== -->
 
-  <!-- =========================================
-       GOOGLE FONT
-  ========================================== -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+    <!-- =========================================
+    HTML2CANVAS
+    ========================================== -->
 
-  <!-- =========================================
-       HTML2CANVAS
-  ========================================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- =========================================
+    JSPDF
+    ========================================== -->
 
-  <!-- =========================================
-       JSPDF
-  ========================================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- =========================================
+    CSS
+    ========================================== -->
 
-  <!-- =========================================
-       CSS
-  ========================================== -->
+    <style>
+        :root {
 
-  <style>
+            --a4-width: 210mm;
+            --a4-height: 297mm;
 
-    :root {
+            --black: #111;
+            --gray: #666;
+            --border: #d7d7d7;
 
-      --a4-width: 210mm;
-      --a4-height: 297mm;
+        }
 
-      --black: #111;
-      --gray: #666;
-      --border: #d7d7d7;
+        * {
 
-    }
+            margin: 0;
+            padding: 0;
 
-    * {
+            box-sizing: border-box;
 
-      margin: 0;
-      padding: 0;
+            font-family:
+                "Noto Sans Devanagari",
+                sans-serif;
 
-      box-sizing: border-box;
+        }
 
-      font-family:
-        "Noto Sans Devanagari",
-        sans-serif;
+        body {
 
-    }
+            background: #dfe5ec;
 
-    body {
+            padding: 20px;
 
-      background: #dfe5ec;
+            color: var(--black);
 
-      padding: 20px;
+        }
 
-      color: var(--black);
+        #pdf-content {
 
-    }
+            width: 100%;
 
-    #pdf-content {
+        }
 
-      width: 100%;
+        /* =========================================
+           PAGE
+        ========================================== */
 
-    }
+        .page {
 
-    /* =========================================
-       PAGE
-    ========================================== */
+            width: var(--a4-width);
 
-    .page {
+            min-height: var(--a4-height);
 
-      width: var(--a4-width);
+            background: #fff;
 
-      min-height: var(--a4-height);
+            margin: 25px auto;
 
-      background: #fff;
+            position: relative;
 
-      margin: 25px auto;
+            overflow: hidden;
 
-      position: relative;
+            padding:
+                18mm
+                16mm
+                16mm;
 
-      overflow: hidden;
+            border:
+                1px
+                solid
+                var(--border);
 
-      padding:
-        18mm
-        16mm
-        16mm;
+            page-break-after: always;
 
-      border:
-        1px
-        solid
-        var(--border);
+        }
 
-      page-break-after: always;
+        .top-line {
 
-    }
+            position: absolute;
 
-    .top-line {
+            top: 0;
+            left: 0;
 
-      position: absolute;
+            width: 100%;
+            height: 7px;
 
-      top: 0;
-      left: 0;
+            background: #000;
 
-      width: 100%;
-      height: 7px;
+        }
 
-      background: #000;
+        .watermark {
 
-    }
+            position: absolute;
 
-    .watermark {
+            top: 50%;
+            left: 50%;
 
-      position: absolute;
+            transform:
+                translate(-50%, -50%)
+                rotate(-35deg);
 
-      top: 50%;
-      left: 50%;
+            font-size: 65px;
 
-      transform:
-        translate(-50%, -50%)
-        rotate(-35deg);
+            font-weight: 800;
 
-      font-size: 65px;
+            color:
+                rgba(0, 0, 0, 0.03);
 
-      font-weight: 800;
+            pointer-events: none;
 
-      color:
-        rgba(0,0,0,0.03);
+            user-select: none;
 
-      pointer-events: none;
+            z-index: 0;
 
-      user-select: none;
+            white-space: nowrap;
 
-      z-index: 0;
+        }
 
-      white-space: nowrap;
+        .page-number {
 
-    }
+            position: absolute;
 
-    .page-number {
+            top: 11mm;
+            right: 15mm;
 
-      position: absolute;
+            font-size: 12px;
 
-      top: 11mm;
-      right: 15mm;
+            color: #666;
 
-      font-size: 12px;
+            z-index: 5;
 
-      color: #666;
+        }
 
-      z-index: 5;
+        /* =========================================
+           PHOTO
+        ========================================= */
 
-    }
+        .photo-wrapper {
 
-    /* =========================================
-       PHOTO
-    ========================================= */
+            display: flex;
 
-    .photo-wrapper {
+            justify-content: center;
 
-      display: flex;
+            margin-bottom: 24px;
 
-      justify-content: center;
+            position: relative;
 
-      margin-bottom: 24px;
+            z-index: 5;
 
-      position: relative;
+        }
 
-      z-index: 5;
+        .photo-box {
 
-    }
+            width: 170px;
 
-    .photo-box {
+            background: #fff;
 
-      width: 170px;
+            border:
+                2px
+                solid
+                #000;
 
-      background: #fff;
+            border-radius: 14px;
 
-      border:
-        2px
-        solid
-        #000;
+            padding: 10px;
 
-      border-radius: 14px;
+        }
 
-      padding: 10px;
+        .photo-box video,
+        .photo-box img {
 
-    }
+            width: 100%;
 
-    .photo-box video,
-    .photo-box img {
+            height: 210px;
 
-      width: 100%;
+            object-fit: cover;
 
-      height: 210px;
+            border-radius: 10px;
 
-      object-fit: cover;
+            background: #f3f3f3;
 
-      border-radius: 10px;
+        }
 
-      background: #f3f3f3;
+        #photoPreview {
 
-    }
+            display: none;
 
-    #photoPreview {
+        }
 
-      display: none;
+        #canvas {
 
-    }
+            display: none;
 
-    #canvas {
+        }
 
-      display: none;
+        .capture-btn {
 
-    }
+            width: 100%;
 
-    .capture-btn {
+            margin-top: 10px;
 
-      width: 100%;
+            padding: 12px;
 
-      margin-top: 10px;
+            border: none;
 
-      padding: 12px;
+            background: #000;
 
-      border: none;
+            color: #fff;
 
-      background: #000;
+            border-radius: 8px;
 
-      color: #fff;
+            font-size: 14px;
 
-      border-radius: 8px;
+            font-weight: 700;
 
-      font-size: 14px;
+            cursor: pointer;
 
-      font-weight: 700;
+        }
 
-      cursor: pointer;
+        /* =========================================
+           CAMERA TOGGLE BUTTONS
+        ========================================= */
 
-    }
+        .camera-toggle-row {
 
-    /* =========================================
-       CAMERA TOGGLE BUTTONS
-    ========================================= */
+            display: flex;
 
-    .camera-toggle-row {
+            gap: 6px;
 
-      display: flex;
+            margin-top: 8px;
 
-      gap: 6px;
+        }
 
-      margin-top: 8px;
+        .camera-toggle-row button {
 
-    }
+            flex: 1;
 
-    .camera-toggle-row button {
+            padding: 8px 0;
 
-      flex: 1;
+            border: 2px solid #000;
 
-      padding: 8px 0;
+            background: #fff;
 
-      border: 2px solid #000;
+            color: #000;
 
-      background: #fff;
+            border-radius: 8px;
 
-      color: #000;
+            font-size: 12px;
 
-      border-radius: 8px;
+            font-weight: 700;
 
-      font-size: 12px;
+            cursor: pointer;
 
-      font-weight: 700;
+            font-family:
+                "Noto Sans Devanagari",
+                sans-serif;
 
-      cursor: pointer;
+        }
 
-      font-family:
-        "Noto Sans Devanagari",
-        sans-serif;
+        .camera-toggle-row button.active-cam {
 
-    }
+            background: #000;
 
-    .camera-toggle-row button.active-cam {
+            color: #fff;
 
-      background: #000;
+        }
 
-      color: #fff;
+        /* =========================================
+           HEADER
+        ========================================= */
 
-    }
+        .header {
 
-    /* =========================================
-       HEADER
-    ========================================= */
+            text-align: center;
 
-    .header {
+            margin-bottom: 32px;
 
-      text-align: center;
+            position: relative;
 
-      margin-bottom: 32px;
+            z-index: 2;
 
-      position: relative;
+        }
 
-      z-index: 2;
+        .header h1 {
 
-    }
+            font-size: 30px;
 
-    .header h1 {
+            font-weight: 800;
 
-      font-size: 30px;
+            margin-bottom: 8px;
 
-      font-weight: 800;
+        }
 
-      margin-bottom: 8px;
+        .header p {
 
-    }
+            font-size: 14px;
 
-    .header p {
+            color: #444;
 
-      font-size: 14px;
+        }
 
-      color: #444;
+        /* =========================================
+           TITLES
+        ========================================= */
 
-    }
+        .section-title {
 
-    /* =========================================
-       TITLES
-    ========================================= */
+            font-size: 22px;
 
-    .section-title {
+            font-weight: 700;
 
-      font-size: 22px;
+            margin-top: 24px;
+            margin-bottom: 18px;
 
-      font-weight: 700;
+            padding-bottom: 6px;
 
-      margin-top: 24px;
-      margin-bottom: 18px;
+            border-bottom:
+                2px
+                solid
+                #000;
 
-      padding-bottom: 6px;
+            position: relative;
 
-      border-bottom:
-        2px
-        solid
-        #000;
+            z-index: 2;
 
-      position: relative;
+        }
 
-      z-index: 2;
+        .center {
 
-    }
+            text-align: center;
 
-    .center {
+        }
 
-      text-align: center;
+        /* =========================================
+           FIELD INLINE
+        ========================================= */
 
-    }
+        .field-inline {
 
-    /* =========================================
-       FIELD INLINE
-    ========================================= */
+            display: flex;
 
-    .field-inline {
+            align-items: flex-start;
 
-      display: flex;
+            gap: 15px;
 
-      align-items: flex-start;
+            margin-bottom: 18px;
 
-      gap: 15px;
+            position: relative;
 
-      margin-bottom: 18px;
+            z-index: 2;
 
-      position: relative;
+        }
 
-      z-index: 2;
+        .field-inline label {
 
-    }
+            width: 300px;
 
-    .field-inline label {
+            font-size: 14px;
 
-      width: 300px;
+            font-weight: 600;
 
-      font-size: 14px;
+            line-height: 1.8;
 
-      font-weight: 600;
+            flex-shrink: 0;
 
-      line-height: 1.8;
+        }
 
-      flex-shrink: 0;
+        /* =========================================
+           THREE INPUT LINES
+        ========================================= */
 
-    }
+        .triple-line {
 
-    /* =========================================
-       THREE INPUT LINES
-    ========================================= */
+            flex: 1;
 
-    .triple-line {
+            display: flex;
 
-      flex: 1;
+            flex-direction: column;
 
-      display: flex;
+            gap: 10px;
 
-      flex-direction: column;
+        }
 
-      gap: 10px;
+        .triple-line input {
 
-    }
+            width: 100%;
 
-    .triple-line input {
+            border: none;
 
-      width: 100%;
+            border-bottom:
+                1px
+                dotted
+                #666;
 
-      border: none;
+            padding:
+                6px
+                2px;
 
-      border-bottom:
-        1px
-        dotted
-        #666;
+            background: transparent;
 
-      padding:
-        6px
-        2px;
+            outline: none;
 
-      background: transparent;
+            font-size: 13px;
 
-      outline: none;
+        }
 
-      font-size: 13px;
+        /* =========================================
+           DOCUMENTS
+        ========================================= */
 
-    }
+        .documents-grid {
 
-    /* =========================================
-       DOCUMENTS
-    ========================================= */
+            display: grid;
 
-    .documents-grid {
+            grid-template-columns:
+                repeat(2, 1fr);
 
-      display: grid;
+            gap: 14px;
 
-      grid-template-columns:
-        repeat(2,1fr);
+            margin-top: 18px;
 
-      gap: 14px;
+        }
 
-      margin-top: 18px;
+        .documents-grid label {
 
-    }
+            display: flex;
 
-    .documents-grid label {
+            align-items: center;
 
-      display: flex;
+            gap: 10px;
 
-      align-items: center;
+            font-size: 14px;
 
-      gap: 10px;
+        }
 
-      font-size: 14px;
+        input[type="checkbox"] {
 
-    }
+            width: 16px;
+            height: 16px;
 
-    input[type="checkbox"] {
+            accent-color: black;
 
-      width: 16px;
-      height: 16px;
+        }
 
-      accent-color: black;
+        /* =========================================
+           DECLARATION
+        ========================================= */
 
-    }
+        .declaration {
 
-    /* =========================================
-       DECLARATION
-    ========================================= */
+            margin-top: 14px;
 
-    .declaration {
+            line-height: 2;
 
-      margin-top: 14px;
+            text-align: justify;
 
-      line-height: 2;
+            font-size: 14px;
 
-      text-align: justify;
+        }
 
-      font-size: 14px;
+        /* =========================================
+           SIGNATURE
+        ========================================= */
 
-    }
+        .signature-line {
 
-    /* =========================================
-       SIGNATURE
-    ========================================= */
+            margin-top: 45px;
 
-    .signature-line {
+            display: flex;
 
-      margin-top: 45px;
+            align-items: center;
 
-      display: flex;
+            gap: 14px;
 
-      align-items: center;
+        }
 
-      gap: 14px;
+        .signature-line span {
 
-    }
+            font-size: 16px;
 
-    .signature-line span {
+            font-weight: 700;
 
-      font-size: 16px;
+        }
 
-      font-weight: 700;
+        .signature-line .line {
 
-    }
+            flex: 1;
 
-    .signature-line .line {
+            border-bottom:
+                1px
+                dashed
+                #000;
 
-      flex: 1;
+            height: 1px;
 
-      border-bottom:
-        1px
-        dashed
-        #000;
+        }
 
-      height: 1px;
+        /* =========================================
+           LISTS
+        ========================================= */
 
-    }
+        .info-list {
 
-    /* =========================================
-       LISTS
-    ========================================= */
+            margin-left: 22px;
 
-    .info-list {
+            margin-top: 15px;
 
-      margin-left: 22px;
+        }
 
-      margin-top: 15px;
+        .info-list li {
 
-    }
+            margin-bottom: 18px;
 
-    .info-list li {
+            line-height: 1.9;
 
-      margin-bottom: 18px;
+            font-size: 14px;
 
-      line-height: 1.9;
+        }
 
-      font-size: 14px;
+        .info-list input {
 
-    }
+            width: 320px;
 
-    .info-list input {
+            border: none;
 
-      width: 320px;
+            border-bottom:
+                1px
+                dotted
+                #666;
 
-      border: none;
+            background: transparent;
 
-      border-bottom:
-        1px
-        dotted
-        #666;
+            padding: 4px;
 
-      background: transparent;
+            outline: none;
 
-      padding: 4px;
+            margin-left: 10px;
 
-      outline: none;
+        }
 
-      margin-left: 10px;
+        /* =========================================
+           RULES
+        ========================================= */
 
-    }
+        .main-heading {
 
-    /* =========================================
-       RULES
-    ========================================= */
+            text-align: center;
 
-    .main-heading {
+            font-size: 32px;
 
-      text-align: center;
+            font-weight: 800;
 
-      font-size: 32px;
+            margin-bottom: 35px;
 
-      font-weight: 800;
+            text-decoration: underline;
 
-      margin-bottom: 35px;
+        }
 
-      text-decoration: underline;
+        .rules-section {
 
-    }
+            margin-bottom: 34px;
 
-    .rules-section {
+        }
 
-      margin-bottom: 34px;
+        .rules-section h3 {
 
-    }
+            font-size: 22px;
 
-    .rules-section h3 {
+            margin-bottom: 16px;
 
-      font-size: 22px;
+            font-weight: 700;
 
-      margin-bottom: 16px;
+        }
 
-      font-weight: 700;
+        .rules-section ul {
 
-    }
+            list-style: none;
 
-    .rules-section ul {
+            padding-left: 24px;
 
-      list-style: none;
+        }
 
-      padding-left: 24px;
+        .rules-section li {
 
-    }
+            position: relative;
 
-    .rules-section li {
+            margin-bottom: 14px;
 
-      position: relative;
+            font-size: 15px;
 
-      margin-bottom: 14px;
+            line-height: 2;
 
-      font-size: 15px;
+        }
 
-      line-height: 2;
+        .rules-section li::before {
 
-    }
+            content: "➤";
 
-    .rules-section li::before {
+            position: absolute;
 
-      content: "➤";
+            left: -22px;
 
-      position: absolute;
+            top: 0;
 
-      left: -22px;
+        }
 
-      top: 0;
+        .page-footer {
 
-    }
+            position: absolute;
 
-    .page-footer {
+            bottom: 12mm;
+            right: 16mm;
 
-      position: absolute;
+            font-size: 12px;
 
-      bottom: 12mm;
-      right: 16mm;
+            color: #666;
 
-      font-size: 12px;
+        }
 
-      color: #666;
+        .footer {
 
-    }
+            position: absolute;
 
-    .footer {
+            bottom: 8mm;
+            left: 0;
 
-      position: absolute;
+            width: 100%;
 
-      bottom: 8mm;
-      left: 0;
+            text-align: center;
 
-      width: 100%;
+            font-size: 11px;
 
-      text-align: center;
+            color: #777;
 
-      font-size: 11px;
+        }
 
-      color: #777;
+        /* =========================================
+           GUARANTOR AFFIDAVIT – PAGE 5
+        ========================================= */
 
-    }
+        .affidavit-title {
 
-    /* =========================================
-       BUTTON
-    ========================================= */
+            font-size: 28px;
 
-    .download-btn {
+            font-weight: 800;
 
-      display: block;
+            text-align: center;
 
-      width: 320px;
+            margin-top: 6px;
+            margin-bottom: 8px;
 
-      margin: 35px auto;
+            text-decoration: underline;
 
-      padding: 17px;
+            position: relative;
 
-      border: none;
+            z-index: 2;
 
-      background: #000;
+        }
 
-      color: white;
+        .affidavit-subtitle {
 
-      border-radius: 10px;
+            font-size: 24px;
 
-      font-size: 17px;
+            font-weight: 700;
 
-      font-weight: 700;
+            text-align: center;
 
-      cursor: pointer;
+            margin-bottom: 35px;
 
-    }
+            text-decoration: underline;
 
-    /* =========================================
-       MOBILE
-    ========================================= */
+            position: relative;
 
-    @media(max-width:900px){
+            z-index: 2;
 
-      body {
+        }
 
-        padding: 10px;
+        .affidavit-row {
 
-      }
+            display: flex;
 
-      .page {
+            align-items: baseline;
 
-        width: 100%;
+            gap: 6px;
 
-        min-height: auto;
+            margin-bottom: 20px;
 
-        padding: 24px;
+            font-size: 17px;
 
-      }
+            line-height: 2;
 
-      .field-inline {
+            position: relative;
 
-        flex-direction: column;
+            z-index: 2;
 
-      }
+            flex-wrap: wrap;
 
-      .field-inline label {
+        }
 
-        width: 100%;
+        .affidavit-row .label-text {
 
-      }
+            font-weight: 600;
 
-      .documents-grid {
+            white-space: nowrap;
 
-        grid-template-columns: 1fr;
+        }
 
-      }
+        .affidavit-row .blank-line {
 
-      .info-list input {
+            display: inline-block;
 
-        width: 100%;
+            min-width: 180px;
 
-        margin-top: 6px;
+            border-bottom: 1px dotted #666;
 
-        margin-left: 0;
+            height: 28px;
 
-        display: block;
+            flex: 1 1 140px;
 
-      }
+        }
 
-    }
+        .affidavit-row .blank-line.short {
 
-    /* =========================================
-       PRINT
-    ========================================= */
+            min-width: 120px;
 
-    @media print {
+            flex: 0 1 120px;
 
-      body {
+        }
 
-        background: white;
+        .affidavit-row .blank-line.medium {
 
-        padding: 0;
+            min-width: 160px;
 
-      }
+            flex: 1 1 140px;
 
-      .page {
+        }
 
-        margin: 0;
+        .affidavit-row .blank-line.wide {
 
-        border: none;
+            min-width: 220px;
 
-      }
+            flex: 1 1 180px;
 
-      .download-btn,
-      .capture-btn,
-      .camera-toggle-row,
-      .refresh-btn {
+        }
 
-        display: none;
+        .affidavit-paragraph {
 
-      }
+            margin-top: 20px;
 
-    }
+            margin-bottom: 28px;
 
-  </style>
+            font-size: 17px;
+
+            line-height: 2.35;
+
+            text-align: justify;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .affidavit-bottom {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 40px;
+
+            margin-top: 40px;
+
+            font-size: 17px;
+
+            line-height: 2.2;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .affidavit-bottom .left,
+        .affidavit-bottom .right {
+
+            width: 48%;
+
+        }
+
+        .affidavit-bottom .left strong,
+        .affidavit-bottom .right strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+        }
+
+        .affidavit-bottom .blank-line {
+
+            display: inline-block;
+
+            min-width: 140px;
+
+            border-bottom: 1px dotted #666;
+
+            height: 28px;
+
+        }
+
+        .affidavit-bottom .blank-line.wide {
+
+            min-width: 200px;
+
+        }
+
+        .affidavit-signature {
+
+            margin-top: 10px;
+
+        }
+
+        .affidavit-signature .blank-line {
+
+            min-width: 200px;
+
+        }
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        .download-btn {
+
+            display: block;
+
+            width: 320px;
+
+            margin: 35px auto;
+
+            padding: 17px;
+
+            border: none;
+
+            background: #000;
+
+            color: white;
+
+            border-radius: 10px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media(max-width:900px) {
+
+            body {
+
+                padding: 10px;
+
+            }
+
+            .page {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 24px;
+
+            }
+
+            .field-inline {
+
+                flex-direction: column;
+
+            }
+
+            .field-inline label {
+
+                width: 100%;
+
+            }
+
+            .documents-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .info-list input {
+
+                width: 100%;
+
+                margin-top: 6px;
+
+                margin-left: 0;
+
+                display: block;
+
+            }
+
+            .affidavit-row {
+
+                flex-wrap: wrap;
+
+            }
+
+            .affidavit-row .blank-line {
+
+                min-width: 120px;
+
+                flex: 1 1 100%;
+
+            }
+
+            .affidavit-bottom {
+
+                flex-direction: column;
+
+                gap: 30px;
+
+            }
+
+            .affidavit-bottom .left,
+            .affidavit-bottom .right {
+
+                width: 100%;
+
+            }
+
+        }
+
+        /* =========================================
+           PRINT
+        ========================================= */
+
+        @media print {
+
+            body {
+
+                background: white;
+
+                padding: 0;
+
+            }
+
+            .page {
+
+                margin: 0;
+
+                border: none;
+
+            }
+
+            .download-btn,
+            .capture-btn,
+            .camera-toggle-row,
+            .refresh-btn {
+
+                display: none;
+
+            }
+
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div id="pdf-content">
+    <div id="pdf-content">
 
-<!-- =========================================
-PAGE 1
-========================================= -->
+        <!-- =========================================
+        PAGE 1
+        ========================================= -->
 
-<section class="page">
+        <section class="page">
 
-  <div class="top-line"></div>
+            <div class="top-line"></div>
 
-  <div class="watermark">
-    ELECTRIC RIDERS
-  </div>
+            <div class="watermark">
+                ELECTRIC RIDERS
+            </div>
 
-  <div class="page-number">
-    1 | Page
-  </div>
+            <div class="page-number">
+                1 | Page
+            </div>
 
-  <!-- PHOTO -->
+            <!-- PHOTO -->
 
-  <div class="photo-wrapper">
+            <div class="photo-wrapper">
 
-    <div class="photo-box">
+                <div class="photo-box">
 
-      <video
-        id="camera"
-        autoplay
-        playsinline
-      ></video>
+                    <video id="camera" autoplay playsinline></video>
 
-      <canvas id="canvas"></canvas>
+                    <canvas id="canvas"></canvas>
 
-      <img id="photoPreview">
+                    <img id="photoPreview">
 
-      <button
-        class="capture-btn"
-        onclick="capturePhoto()"
-      >
-        फोटो कैप्चर
-      </button>
+                    <button class="capture-btn" onclick="capturePhoto()">
+                        फोटो कैप्चर
+                    </button>
 
-      <div class="camera-toggle-row">
-        <button
-          id="btnFrontCam"
-          class="active-cam"
-          onclick="switchCamera('user')"
-        >
-          अगला कैमरा
-        </button>
-        <button
-          id="btnBackCam"
-          onclick="switchCamera('environment')"
-        >
-          पीछे का कैमरा
-        </button>
-      </div>
+                    <div class="camera-toggle-row">
+                        <button id="btnFrontCam" class="active-cam" onclick="switchCamera('user')">
+                            अगला कैमरा
+                        </button>
+                        <button id="btnBackCam" onclick="switchCamera('environment')">
+                            पीछे का कैमरा
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <h1>
+                    इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
+                </h1>
+
+                <p>
+                    सी – 13 / 122, आवास विकास कॉलोनी, राजाजीपुरम, लखनऊ
+                </p>
+
+            </div>
+
+            <!-- PERSONAL INFO -->
+
+            <div class="section-title">
+                व्यक्तिगत जानकारी :-
+            </div>
+
+            <div class="field-inline">
+                <label>1. ड्राइवर का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>2. ड्राइवर का मोबाइल नम्बर :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>3. ड्राइवर का वर्तमान पता :</label>
+                <div class="triple-line">
+                    <input type="text">
+                    <input type="text">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>
+                    4. ड्राइवर का स्थायी पता
+                    (आधार कार्ड के अनुसार) :
+                </label>
+
+                <div class="triple-line">
+                    <input type="text">
+                    <input type="text">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>5. कार्य स्थल का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>6. ड्राइवर की आईडी :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>
+                    7. ड्राइवर की माताजी का नाम एवं मो नं :
+                </label>
+
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>
+                    8. ड्राइवर की पिताजी का नाम एवं मो नं :
+                </label>
+
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <!-- DOCUMENTS -->
+
+            <div class="section-title">
+                दस्तावेजों की सूची :-
+            </div>
+
+            <div class="documents-grid">
+
+                <label>
+                    <input type="checkbox">
+                    A. आधार कार्ड
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    B. पैन कार्ड
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    C. वोटर कार्ड
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    D. ड्राइविंग लाइसेंस
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    E. पासपोर्ट
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    F. चरित्र प्रमाण पत्र
+                </label>
+
+            </div>
+
+            <div class="footer">
+                Electric Riders © 2026
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        PAGE 2
+        ========================================= -->
+
+        <section class="page">
+
+            <div class="top-line"></div>
+
+            <div class="watermark">
+                ELECTRIC RIDERS
+            </div>
+
+            <div class="page-number">
+                2 | Page
+            </div>
+
+            <div class="section-title">
+                गारन्टर की जानकारी :-
+            </div>
+
+            <div class="field-inline">
+                <label>1. गारन्टर का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>2. गारन्टर का मोबाइल नम्बर :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>3. गारन्टर का पता :</label>
+                <div class="triple-line">
+                    <input type="text">
+                    <input type="text">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>4. ड्राइवर के दोस्त का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>5. ड्राइवर के दोस्त का मो नं :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>6. ड्राइवर के दोस्त का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>7. ड्राइवर के दोस्त का मो नं :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>8. परिवार के एक सदस्य का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>9. मोबाइल नम्बर :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>10. एक अन्य रिश्तेदार का नाम :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <div class="field-inline">
+                <label>11. मोबाइल नम्बर :</label>
+                <div class="triple-line">
+                    <input type="text">
+                </div>
+            </div>
+
+            <!-- DECLARATION -->
+
+            <div class="section-title center">
+                घोषणा पत्र
+            </div>
+
+            <p class="declaration">
+
+                मैं शपथ लेता हूँ / लेती हूँ कि मैं इस इलेक्ट्रिक स्कूटर के संचालक द्वारा दिए गए सभी निर्देशों और यातायात नियमों का पालन करूँगा / करूँगी। मैंने इस पंजीकरण फॉर्म में उल्लिखित सभी नियम व शर्तों को अच्छी तरह से पढ़कर समझ लिया है और इनका पालन करूँगा / करूँगी।
+
+            </p>
+
+            <div class="signature-line">
+
+                <span>
+                    ड्राइवर के हस्ताक्षर :
+                </span>
+
+                <div class="line"></div>
+
+            </div>
+
+            <div class="footer">
+                Electric Riders © 2026
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        PAGE 3
+        ========================================= -->
+
+        <section class="page">
+
+            <div class="top-line"></div>
+
+            <div class="watermark">
+                ELECTRIC RIDERS
+            </div>
+
+            <div class="page-number">
+                3 | Page
+            </div>
+
+            <div class="section-title">
+                ड्राइवर को दी गयी जानकारी
+            </div>
+
+            <ul class="info-list">
+
+                <li>
+                    बैटरी स्मार्ट की ड्राइवर आईडी –
+                    <input type="text">
+                </li>
+
+                <li>
+                    गाड़ी का चेसिस नम्बर –
+                    <input type="text">
+                </li>
+
+                <li>
+                    सिक्योरिटी राशि –
+                    <input type="text">
+                </li>
+
+                <li>
+                    गाड़ी निर्गत होने की तारीख –
+                    <input type="text">
+                </li>
+
+                <li>
+                    किराये का प्लान –
+                    <input type="text">
+                </li>
+
+            </ul>
+
+            <div class="section-title">
+                गाड़ी वापसी के समय दी जाने वाली जानकारी
+            </div>
+
+            <ul class="info-list">
+
+                <li>
+                    अतिरिक्त छुट्टी पर पेनाल्टी –
+                    <input type="text">
+                </li>
+
+                <li>
+                    किराये की पेनाल्टी –
+                    <input type="text">
+                </li>
+
+                <li>
+                    बकाया किराया –
+                    <input type="text">
+                </li>
+
+                <li>
+                    गाड़ी डैमेज (टूट–फूट) का भुगतान –
+                    <input type="text">
+                </li>
+
+                <li>
+                    कुल वास्तविक वापसी –
+                    <input type="text">
+                </li>
+
+            </ul>
+
+            <div class="footer">
+                Electric Riders © 2026
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        PAGE 4
+        ========================================= -->
+
+        <section class="page">
+
+            <div class="top-line"></div>
+
+            <div class="watermark">
+                ELECTRIC RIDERS
+            </div>
+
+            <div class="page-number">
+                4 | Page
+            </div>
+
+            <div class="main-heading">
+                नियम और शर्तें
+            </div>
+
+            <!-- RULE 1 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    1. आवश्यक दस्तावेज :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        आधार कार्ड अनिवार्य है।
+                    </li>
+
+                    <li>
+                        पेन कार्ड / वोटर ID / ड्राइविंग लाइसेंस में से कोई दस्तावेज अनिवार्य है।
+                    </li>
+
+                    <li>
+                        पुलिस विभाग द्वारा जारी किया गया चरित्र प्रमाण पत्र या गारन्टर के आधार कार्ड की फोटो कॉपी और गारन्टर का मोबाइल नम्बर अनिवार्य है।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 2 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    2. किराया :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        दैनिक किराया Rs. 99 प्रतिदिन है।
+                    </li>
+
+                    <li>
+                        साप्ताहिक किराया Rs. 109 प्रतिदिन है अर्थात 763 रुपये प्रति सप्ताह।
+                    </li>
+
+                    <li>
+                        मासिक किराया Rs. 2500/- अग्रिम देने पर।
+                    </li>
+
+                    <li>
+                        किराए का समय पर भुगतान न करने पर Rs. 20 प्रतिदिन की पेनाल्टी लगायी जाएगी।
+                    </li>
+
+                    <li>
+                        पन्द्रह दिन या इससे अधिक किराया बकाया होने पर गाड़ी वापस ले ली जायेगी और F.I.R. होगी।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 3 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    3. बैटरी स्वैप :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        बैटरी के सभी स्वैप ₹70 के होंगे। सब्सक्रिप्शन लेने पर सस्ता पड़ेगा।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 4 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    4. सिक्योरिटी राशि :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        सिक्योरिटी जमा राशि ₹2500 होगी।
+                    </li>
+
+                    <li>
+                        यह राशि स्कूटर सही स्थिति में लौटाने पर वापस कर दी जाएगी।
+                    </li>
+
+                    <li>
+                        सिक्योरिटी वापसी के लिए न्यूनतम एक महीने तक गाड़ी चलाना अनिवार्य है।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 5 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    5. छुट्टी और पेनाल्टी :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        आप बैटरी के लिए एक महीने में 4 दिन की छुट्टी ले सकते है। (प्रति सप्ताह एक छुट्टी)
+                    </li>
+
+                    <li>
+                        निर्धारित से अधिक छुट्टी लेने पर Rs. 60 प्रतिदिन की पेनाल्टी लगायी जाएगी जो कि आगामी स्वैप में लगकर आएगी।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 6 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    6. वापसी और चोरी :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        स्कूटर तय तारीख पर सही स्थिति में लौटाना होगा है।
+                    </li>
+
+                    <li>
+                        तय तारीख के बाद स्कूटर न लौटाने पर उसे चोरी माना जाएगा और F.I.R. दर्ज की जाएगी।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RULE 7 -->
+
+            <div class="rules-section">
+
+                <h3>
+                    7. नियम और जिम्मेदारियाँ :-
+                </h3>
+
+                <ul>
+
+                    <li>
+                        हेलमेट पहनना व सड़क पर ट्रैफिक नियमों का पालन करना अनिवार्य है।
+                    </li>
+
+                    <li>
+                        नियमित मेंटेनेंस हमारी जिम्मेदारी है, लेकिन आपकी लापरवाही से हुआ नुकसान आपके निजी खर्चे पर ठीक होगा।
+                    </li>
+
+                    <li>
+                        किसी भी नुकसान की तुरन्त जानकारी देना अनिवार्य है।
+                    </li>
+
+                    <li>
+                        गाड़ी को हर महीने एक बार रूटीन चेकअप / मेंटेनेंस के लिए ऑफिस लाना जरूरी है। ऐसा नहीं करने पर ₹ 200 की पेनाल्टी लगायी जाएगी।
+                    </li>
+
+                    <li>
+                        किसी भी नुकसान के लिए किरायेदार जिम्मेदार होगा। गाड़ी चोरी होने पर बैटरी कनेक्शन चार्ज ₹ 3000.00 व इन्श्योरेन्स कम्पनी से भुगतान में हुए नुकसान का खर्च देना होगा।
+                    </li>
+
+                    <li>
+                        स्कूटर और बैटरी इलेक्ट्रिक राइडर्स की सम्पत्ति है, आपको सिर्फ उपयोग की अनुमति है।
+                    </li>
+
+                    <li>
+                        नियमों का उल्लंघन करने पर E-R स्कूटर जब्त किया जा सकता है।
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- SIGNATURE -->
+
+            <div class="signature-line">
+
+                <span>
+                    ड्राइवर के हस्ताक्षर :
+                </span>
+
+                <div class="line"></div>
+
+            </div>
+
+            <div class="footer">
+                Electric Riders © 2026
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        PAGE 5 – GUARANTOR AFFIDAVIT (merged from second file)
+        ========================================= -->
+
+        <section class="page">
+
+            <div class="top-line"></div>
+
+            <div class="watermark">
+                ELECTRIC RIDERS
+            </div>
+
+            <div class="page-number">
+                5 | Page
+            </div>
+
+            <div class="affidavit-title">
+                इलेक्ट्रिक राइडर्स गारंटर फॉर्म
+            </div>
+
+            <div class="affidavit-subtitle">
+                शपथ पत्र
+            </div>
+
+            <!-- Row 1 -->
+            <div class="affidavit-row">
+                <span class="label-text">मैं</span>
+                <span class="blank-line wide"></span>
+                <span class="label-text">पुत्र श्री</span>
+                <span class="blank-line medium"></span>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="affidavit-row">
+                <span class="blank-line wide"></span>
+                <span class="label-text">निवासी</span>
+                <span class="blank-line wide"></span>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="affidavit-row">
+                <span class="blank-line wide"></span>
+                <span class="label-text"></span>
+                <span class="blank-line medium"></span>
+                <span class="label-text">का स्थायी निवासी हूँ और मैं</span>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="affidavit-row">
+                <span class="label-text">ड्राइवर श्री / श्रीमती / कु.</span>
+                <span class="blank-line medium"></span>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="affidavit-row">
+                <span class="blank-line wide"></span>
+                <span class="label-text">पुत्र / पुत्री</span>
+                <span class="blank-line medium"></span>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="affidavit-row">
+                <span class="blank-line wide"></span>
+                <span class="label-text">निवासी</span>
+                <span class="blank-line medium"></span>
+            </div>
+
+            <!-- Paragraph -->
+            <div class="affidavit-paragraph">
+                वर्ष से भली-भाँति जानता हूँ। मैं अपनी गारंटी पर इनको स्कूटर किराये पर
+                देने की पैरवी करता हूँ और इनकी तरफ से पूरी गारंटी लेता हूँ कि ड्राइवर
+                किराये का समय पर भुगतान करेंगे और गाड़ी का ध्यान रखेंगे और कम्पनी के
+                सभी दिशा निर्देशों का अक्षरशः पालन करेंगे।
+            </div>
+
+            <!-- Bottom: Guarantor + Signature -->
+            <div class="affidavit-bottom">
+
+                <div class="left">
+                    <strong>गारंटर</strong>
+                    <div class="affidavit-row" style="margin-bottom:8px;">
+                        <span class="label-text">नाम </span>
+                        <span class="blank-line wide"></span>
+                    </div>
+                    <div class="affidavit-row" style="margin-bottom:0;">
+                        <span class="label-text">मो०—</span>
+                        <span class="blank-line wide"></span>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <strong>गारंटर के हस्ताक्षर</strong>
+                    <div class="affidavit-signature">
+                        <span class="blank-line wide"></span>
+                    </div>
+                    <div class="affidavit-row" style="margin-top:6px;margin-bottom:0;">
+                        <span class="label-text">मो०—</span>
+                        <span class="blank-line wide"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                Electric Riders © 2026
+            </div>
+
+        </section>
+
+        <!-- =========================================
+        END PAGES
+        ========================================= -->
 
     </div>
 
-  </div>
-
-  <!-- HEADER -->
-
-  <div class="header">
-
-    <h1>
-      इलेक्ट्रिक राइडर्स पंजीकरण फॉर्म
-    </h1>
-
-    <p>
-      सी – 13 / 122, आवास विकास कॉलोनी, राजाजीपुरम, लखनऊ
-    </p>
-
-  </div>
-
-  <!-- PERSONAL INFO -->
-
-  <div class="section-title">
-    व्यक्तिगत जानकारी :-
-  </div>
-
-  <!-- REPEATABLE FIELD -->
-
-  <div class="field-inline">
-    <label>1. ड्राइवर का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>2. ड्राइवर का मोबाइल नम्बर :</label>
-    <div class="triple-line">
-      <input type="text">
-   
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>3. ड्राइवर का वर्तमान पता :</label>
-    <div class="triple-line">
-      <input type="text">
-      <input type="text">
-      <input type="text">
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>
-      4. ड्राइवर का स्थायी पता
-      (आधार कार्ड के अनुसार) :
-    </label>
-
-    <div class="triple-line">
-      <input type="text">
-      <input type="text">
-      <input type="text">
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>5. कार्य स्थल का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>6. ड्राइवर की आईडी :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>
-      7. ड्राइवर की माताजी का नाम एवं मो नं :
-    </label>
-
-    <div class="triple-line">
-      <input type="text">
-     
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>
-      8. ड्राइवर की पिताजी का नाम एवं मो नं :
-    </label>
-
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <!-- DOCUMENTS -->
-
-  <div class="section-title">
-    दस्तावेजों की सूची :-
-  </div>
-
-  <div class="documents-grid">
-
-    <label>
-      <input type="checkbox">
-      A. आधार कार्ड
-    </label>
-
-    <label>
-      <input type="checkbox">
-      B. पैन कार्ड
-    </label>
-
-    <label>
-      <input type="checkbox">
-      C. वोटर कार्ड
-    </label>
-
-    <label>
-      <input type="checkbox">
-      D. ड्राइविंग लाइसेंस
-    </label>
-
-    <label>
-      <input type="checkbox">
-      E. पासपोर्ट
-    </label>
-
-    <label>
-      <input type="checkbox">
-      F. चरित्र प्रमाण पत्र
-    </label>
-
-  </div>
-
-  <div class="footer">
-    Electric Riders © 2026
-  </div>
-
-</section>
-
-<!-- =========================================
-PAGE 2
-========================================= -->
-
-<section class="page">
-
-  <div class="top-line"></div>
-
-  <div class="watermark">
-    ELECTRIC RIDERS
-  </div>
-
-  <div class="page-number">
-    2 | Page
-  </div>
-
-  <div class="section-title">
-    गारन्टर की जानकारी :-
-  </div>
-
-  <!-- GUARANTOR FIELDS -->
-
-  <div class="field-inline">
-    <label>1. गारन्टर का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-     
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>2. गारन्टर का मोबाइल नम्बर :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>3. गारन्टर का पता :</label>
-    <div class="triple-line">
-      <input type="text">
-      <input type="text">
-      <input type="text">
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>4. ड्राइवर के दोस्त का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-    
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>5. ड्राइवर के दोस्त का मो नं :</label>
-    <div class="triple-line">
-      <input type="text">
-     
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>6. ड्राइवर के दोस्त का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>7. ड्राइवर के दोस्त का मो नं :</label>
-    <div class="triple-line">
-      <input type="text">
-      
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>8. परिवार के एक सदस्य का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-  
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>9. मोबाइल नम्बर :</label>
-    <div class="triple-line">
-      <input type="text">
-     
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>10. एक अन्य रिश्तेदार का नाम :</label>
-    <div class="triple-line">
-      <input type="text">
-   
-    </div>
-  </div>
-
-  <div class="field-inline">
-    <label>11. मोबाइल नम्बर :</label>
-    <div class="triple-line">
-      <input type="text">
-     
-    </div>
-  </div>
-
-  <!-- DECLARATION -->
-
-  <div class="section-title center">
-    घोषणा पत्र
-  </div>
-
-  <p class="declaration">
-
-    मैं शपथ लेता हूँ / लेती हूँ कि मैं इस इलेक्ट्रिक स्कूटर के संचालक द्वारा दिए गए सभी निर्देशों और यातायात नियमों का पालन करूँगा / करूँगी। मैंने इस पंजीकरण फॉर्म में उल्लिखित सभी नियम व शर्तों को अच्छी तरह से पढ़कर समझ लिया है और इनका पालन करूँगा / करूँगी।
-
-  </p>
-
-  <div class="signature-line">
-
-    <span>
-      ड्राइवर के हस्ताक्षर :
-    </span>
-
-    <div class="line"></div>
-
-  </div>
-
-  <div class="footer">
-    Electric Riders © 2026
-  </div>
-
-</section>
-
-<!-- =========================================
-PAGE 3
-========================================= -->
-
-<section class="page">
-
-  <div class="top-line"></div>
-
-  <div class="watermark">
-    ELECTRIC RIDERS
-  </div>
-
-  <div class="page-number">
-    3 | Page
-  </div>
-
-  <div class="section-title">
-    ड्राइवर को दी गयी जानकारी
-  </div>
-
-  <ul class="info-list">
-
-    <li>
-      बैटरी स्मार्ट की ड्राइवर आईडी –
-      <input type="text">
-    </li>
-
-    <li>
-      गाड़ी का चेसिस नम्बर –
-      <input type="text">
-    </li>
-
-    <li>
-      सिक्योरिटी राशि –
-      <input type="text">
-    </li>
-
-    <li>
-      गाड़ी निर्गत होने की तारीख –
-      <input type="text">
-    </li>
-
-    <li>
-      किराये का प्लान –
-      <input type="text">
-    </li>
+    <!-- BUTTONS -->
 
-  </ul>
+    <button class="download-btn" onclick="downloadPDF()">
+        PDF डाउनलोड करें
+    </button>
 
-  <div class="section-title">
-    गाड़ी वापसी के समय दी जाने वाली जानकारी
-  </div>
+    <button class="download-btn refresh-btn" onclick="forceRefreshForm()">
+        फॉर्म रिफ्रेश करें
+    </button>
 
-  <ul class="info-list">
+    <!-- =========================================
+    SCRIPT
+    ========================================= -->
 
-    <li>
-      अतिरिक्त छुट्टी पर पेनाल्टी –
-      <input type="text">
-    </li>
+    <script>
+        const video =
+            document.getElementById("camera");
 
-    <li>
-      किराये की पेनाल्टी –
-      <input type="text">
-    </li>
+        const canvas =
+            document.getElementById("canvas");
 
-    <li>
-      बकाया किराया –
-      <input type="text">
-    </li>
+        const preview =
+            document.getElementById("photoPreview");
 
-    <li>
-      गाड़ी डैमेज (टूट–फूट) का भुगतान –
-      <input type="text">
-    </li>
+        const btnFrontCam =
+            document.getElementById("btnFrontCam");
 
-    <li>
-      कुल वास्तविक वापसी –
-      <input type="text">
-    </li>
+        const btnBackCam =
+            document.getElementById("btnBackCam");
 
-  </ul>
+        /* वर्तमान कैमरा स्ट्रीम */
+        let currentStream = null;
 
-  <div class="footer">
-    Electric Riders © 2026
-  </div>
+        /* कैमरा शुरू हो चुका है या नहीं */
+        let cameraStarted = false;
 
-</section>
+        /* =========================================
+           ब्राउज़र रिफ्रेश ब्लॉक करो
+        ========================================= */
 
-<!-- =========================================
-PAGE 4
-========================================= -->
+        window.addEventListener("beforeunload", function(e) {
 
-<section class="page">
+            e.preventDefault();
 
-  <div class="top-line"></div>
+            e.returnValue = "";
 
-  <div class="watermark">
-    ELECTRIC RIDERS
-  </div>
+            return "";
 
-  <div class="page-number">
-    4 | Page
-  </div>
+        });
 
-  <div class="main-heading">
-    नियम और शर्तें
-  </div>
+        /* =========================================
+           कैमरा शुरू करो - सिर्फ बटन दबाने पर
+        ========================================= */
 
-  <!-- RULE 1 -->
+        async function startCamera(facingMode) {
 
-  <div class="rules-section">
+            /* पुराना स्ट्रीम बंद करो */
+            if (currentStream) {
 
-    <h3>
-      1. आवश्यक दस्तावेज :-
-    </h3>
+                currentStream.getTracks().forEach(function(track) {
 
-    <ul>
+                    track.stop();
 
-      <li>
-        आधार कार्ड अनिवार्य है।
-      </li>
+                });
 
-      <li>
-        पेन कार्ड / वोटर ID / ड्राइविंग लाइसेंस में से कोई दस्तावेज अनिवार्य है।
-      </li>
+            }
 
-      <li>
-        पुलिस विभाग द्वारा जारी किया गया चरित्र प्रमाण पत्र या गारन्टर के आधार कार्ड की फोटो कॉपी और गारन्टर का मोबाइल नम्बर अनिवार्य है।
-      </li>
+            try {
 
-    </ul>
+                const stream =
+                    await navigator.mediaDevices.getUserMedia({
 
-  </div>
+                        video: {
+                            facingMode: facingMode,
+                            width: {
+                                ideal: 1280
+                            },
+                            height: {
+                                ideal: 720
+                            }
+                        },
 
-  <!-- RULE 2 -->
+                        audio: false
 
-  <div class="rules-section">
+                    });
 
-    <h3>
-      2. किराया :-
-    </h3>
+                currentStream = stream;
 
-    <ul>
+                video.srcObject = stream;
 
-      <li>
-        दैनिक किराया Rs. 99 प्रतिदिन है।
-      </li>
+                video.style.display = "block";
 
-      <li>
-        साप्ताहिक किराया Rs. 109 प्रतिदिन है अर्थात 763 रुपये प्रति सप्ताह।
-      </li>
+                preview.style.display = "none";
 
-      <li>
-        मासिक किराया Rs. 2500/- अग्रिम देने पर।
-      </li>
+                cameraStarted = true;
 
-      <li>
-        किराए का समय पर भुगतान न करने पर Rs. 20 प्रतिदिन की पेनाल्टी लगायी जाएगी।
-      </li>
+            } catch (error) {
 
-      <li>
-        पन्द्रह दिन या इससे अधिक किराया बकाया होने पर गाड़ी वापस ले ली जायेगी और F.I.R. होगी।
-      </li>
+                alert("कैमरा एक्सेस नहीं मिला");
 
-    </ul>
+            }
 
-  </div>
+        }
 
-  <!-- RULE 3 -->
+        /* कैमरा स्विच करने का फंक्शन */
+        function switchCamera(facingMode) {
 
-  <div class="rules-section">
+            btnFrontCam.classList.remove("active-cam");
 
-    <h3>
-      3. बैटरी स्वैप :-
-    </h3>
+            btnBackCam.classList.remove("active-cam");
 
-    <ul>
+            if (facingMode === "user") {
 
-      <li>
-        बैटरी के सभी स्वैप ₹70 के होंगे। सब्सक्रिप्शन लेने पर सस्ता पड़ेगा।
-      </li>
+                btnFrontCam.classList.add("active-cam");
 
-    </ul>
+            } else {
 
-  </div>
+                btnBackCam.classList.add("active-cam");
 
-  <!-- RULE 4 -->
+            }
 
-  <div class="rules-section">
+            startCamera(facingMode);
 
-    <h3>
-      4. सिक्योरिटी राशि :-
-    </h3>
+        }
 
-    <ul>
+        /* =========================================
+           फोटो कैप्चर
+        ========================================= */
 
-      <li>
-        सिक्योरिटी जमा राशि ₹2500 होगी।
-      </li>
+        function capturePhoto() {
 
-      <li>
-        यह राशि स्कूटर सही स्थिति में लौटाने पर वापस कर दी जाएगी।
-      </li>
+            /* अगर कैमरा शुरू नहीं हुआ तो पहले शुरू करो */
+            if (!cameraStarted) {
 
-       <li>
-        सिक्योरिटी वापसी के लिए न्यूनतम एक महीने तक गाड़ी चलाना अनिवार्य है।
-      </li>
+                alert("पहले कैमरा बटन दबाएं");
 
-    </ul>
+                return;
 
-  </div>
+            }
 
-  <!-- RULE 5 -->
+            const context =
+                canvas.getContext("2d");
 
-  <div class="rules-section">
+            canvas.width =
+                video.videoWidth;
 
-    <h3>
-      5. छुट्टी और पेनाल्टी :-
-    </h3>
+            canvas.height =
+                video.videoHeight;
 
-    <ul>
+            context.drawImage(
+                video,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
 
-      <li>
-        आप बैटरी के लिए एक महीने में 4 दिन की छुट्टी ले सकते है। (प्रति सप्ताह एक छुट्टी)
-      </li>
+            const imageData =
+                canvas.toDataURL(
+                    "image/jpeg",
+                    1
+                );
 
-      <li>
-        निर्धारित से अधिक छुट्टी लेने पर Rs. 60 प्रतिदिन की पेनाल्टी लगायी जाएगी जो कि आगामी स्वैप में लगकर आएगी।
-      </li>
+            preview.src =
+                imageData;
 
-    </ul>
+            preview.style.display =
+                "block";
 
-  </div>
+            video.style.display =
+                "none";
 
-  <!-- RULE 6 -->
+        }
 
-  <div class="rules-section">
+        /* =========================================
+           फोर्स रिफ्रेश - यही एकमात्र तरीका है
+        ========================================= */
 
-    <h3>
-      6. वापसी और चोरी :-
-    </h3>
+        function forceRefreshForm() {
 
-    <ul>
+            /* सभी टेक्स्ट इनपुट खाली करो */
+            var allInputs =
+                document.querySelectorAll("input[type='text']");
 
-      <li>
-        स्कूटर तय तारीख पर सही स्थिति में लौटाना होगा है।
-      </li>
+            allInputs.forEach(function(input) {
 
-      <li>
-        तय तारीख के बाद स्कूटर न लौटाने पर उसे चोरी माना जाएगा और F.I.R. दर्ज की जाएगी।
-      </li>
+                input.value = "";
 
-    </ul>
+            });
 
-  </div>
+            /* सभी चेकबॉक्स अनचेक करो */
+            var allCheckboxes =
+                document.querySelectorAll("input[type='checkbox']");
 
-  <!-- RULE 7 -->
+            allCheckboxes.forEach(function(cb) {
 
-  <div class="rules-section">
+                cb.checked = false;
 
-    <h3>
-      7. नियम और जिम्मेदारियाँ :-
-    </h3>
+            });
 
-    <ul>
+            /* फोटो प्रीव्यू हटाओ */
+            preview.style.display = "none";
 
-      <li>
-        हेलमेट पहनना व सड़क पर ट्रैफिक नियमों का पालन करना अनिवार्य है।
-      </li>
+            preview.src = "";
 
-      <li>
-        नियमित मेंटेनेंस हमारी जिम्मेदारी है, लेकिन आपकी लापरवाही से हुआ नुकसान आपके निजी खर्चे पर ठीक होगा।
-      </li>
+            /* कैमरा स्ट्रीम बंद करो */
+            if (currentStream) {
 
-      <li>
-        किसी भी नुकसान की तुरन्त जानकारी देना अनिवार्य है।
-      </li>
+                currentStream.getTracks().forEach(function(track) {
 
-      <li>
-        गाड़ी को हर महीने एक बार रूटीन चेकअप / मेंटेनेंस के लिए ऑफिस लाना जरूरी है। ऐसा नहीं करने पर ₹ 200 की पेनाल्टी लगायी जाएगी।
-      </li>
+                    track.stop();
 
-      <li>
-        किसी भी नुकसान के लिए किरायेदार जिम्मेदार होगा। गाड़ी चोरी होने पर बैटरी कनेक्शन चार्ज ₹ 3000.00 व इन्श्योरेन्स कम्पनी से भुगतान में हुए नुकसान का खर्च देना होगा।
-      </li>
+                });
 
-      <li>
-        स्कूटर और बैटरी इलेक्ट्रिक राइडर्स की सम्पत्ति है, आपको सिर्फ उपयोग की अनुमति है।
-      </li>
+                currentStream = null;
 
-      <li>
-        नियमों का उल्लंघन करने पर E-R स्कूटर जब्त किया जा सकता है।
-      </li>
+            }
 
-    </ul>
+            video.srcObject = null;
 
-  </div>
+            video.style.display = "block";
 
-  <!-- SIGNATURE -->
+            cameraStarted = false;
 
-  <div class="signature-line">
+            /* फ्रंट कैमरा बटन एक्टिव */
+            btnFrontCam.classList.add("active-cam");
 
-    <span>
-      ड्राइवर के हस्ताक्षर :
-    </span>
+            btnBackCam.classList.remove("active-cam");
 
-    <div class="line"></div>
+            /* फ्रेश कैमरा शुरू करो */
+            startCamera("user");
 
-  </div>
+        }
 
-  <div class="footer">
-    Electric Riders © 2026
-  </div>
+        /* =========================================
+           पेज लोड पर कैमरा ऑटो शुरू नहीं
+        ========================================= */
 
-</section>
+        /* startCamera("user") को हटा दिया गया -
+           अब कैमरा सिर्फ रिफ्रेश बटन दबाने पर
+           या कैमरा स्विच बटन दबाने पर शुरू होगा */
 
-</div>
+        /* =========================================
+           PDF डाउनलोड
+        ========================================= */
 
-<!-- BUTTONS -->
+        async function downloadPDF() {
 
-<button
-  class="download-btn"
-  onclick="downloadPDF()"
->
-  PDF डाउनलोड करें
-</button>
+            const button =
+                document.querySelector(
+                    ".download-btn"
+                );
 
-<button
-  class="download-btn refresh-btn"
-  onclick="forceRefreshForm()"
->
-  फॉर्म रिफ्रेश करें
-</button>
+            button.innerHTML =
+                "PDF तैयार हो रही है...";
 
-<!-- =========================================
-SCRIPT
-========================================= -->
+            button.disabled = true;
 
-<script>
+            const {
+                jsPDF
+            } = window.jspdf;
 
-const video =
-  document.getElementById("camera");
+            const pdf =
+                new jsPDF({
 
-const canvas =
-  document.getElementById("canvas");
+                    orientation: "portrait",
 
-const preview =
-  document.getElementById("photoPreview");
+                    unit: "mm",
 
-const btnFrontCam =
-  document.getElementById("btnFrontCam");
+                    format: "a4",
 
-const btnBackCam =
-  document.getElementById("btnBackCam");
+                    compress: true
 
-/* वर्तमान कैमरा स्ट्रीम */
-let currentStream = null;
+                });
 
-/* कैमरा शुरू हो चुका है या नहीं */
-let cameraStarted = false;
+            const pages =
+                document.querySelectorAll(
+                    ".page"
+                );
 
-/* =========================================
-   ब्राउज़र रिफ्रेश ब्लॉक करो
-========================================= */
+            for (
+                let i = 0;
+                i < pages.length;
+                i++
+            ) {
 
-window.addEventListener("beforeunload", function(e) {
+                const page =
+                    pages[i];
 
-  e.preventDefault();
+                const pageCanvas =
+                    await html2canvas(page, {
 
-  e.returnValue = "";
+                        scale: 3,
 
-  return "";
+                        useCORS: true,
 
-});
+                        backgroundColor:
+                            "#ffffff",
 
-/* =========================================
-   कैमरा शुरू करो - सिर्फ बटन दबाने पर
-========================================= */
+                        logging: false,
 
-async function startCamera(facingMode) {
+                        scrollX: 0,
 
-  /* पुराना स्ट्रीम बंद करो */
-  if (currentStream) {
+                        scrollY: 0
 
-    currentStream.getTracks().forEach(function(track) {
+                    });
 
-      track.stop();
+                const image =
+                    pageCanvas.toDataURL(
+                        "image/jpeg",
+                        1.0
+                    );
 
-    });
+                if (i > 0) {
 
-  }
+                    pdf.addPage();
 
-  try {
+                }
 
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
+                pdf.addImage(
 
-        video: {
-          facingMode: facingMode,
-          width: {
-            ideal: 1280
-          },
-          height: {
-            ideal: 720
-          }
-        },
+                    image,
 
-        audio: false
+                    "JPEG",
 
-      });
+                    0,
 
-    currentStream = stream;
+                    0,
 
-    video.srcObject = stream;
+                    210,
 
-    video.style.display = "block";
+                    297,
 
-    preview.style.display = "none";
+                    "",
 
-    cameraStarted = true;
+                    "FAST"
 
-  }
+                );
 
-  catch (error) {
+            }
 
-    alert("कैमरा एक्सेस नहीं मिला");
+            pdf.save(
+                "Electric-Riders-Registration-Form.pdf"
+            );
 
-  }
+            button.innerHTML =
+                "PDF डाउनलोड करें";
 
-}
+            button.disabled =
+                false;
 
-/* कैमरा स्विच करने का फंक्शन */
-function switchCamera(facingMode) {
-
-  btnFrontCam.classList.remove("active-cam");
-
-  btnBackCam.classList.remove("active-cam");
-
-  if (facingMode === "user") {
-
-    btnFrontCam.classList.add("active-cam");
-
-  } else {
-
-    btnBackCam.classList.add("active-cam");
-
-  }
-
-  startCamera(facingMode);
-
-}
-
-/* =========================================
-   फोटो कैप्चर
-========================================= */
-
-function capturePhoto() {
-
-  /* अगर कैमरा शुरू नहीं हुआ तो पहले शुरू करो */
-  if (!cameraStarted) {
-
-    alert("पहले कैमरा बटन दबाएं");
-
-    return;
-
-  }
-
-  const context =
-    canvas.getContext("2d");
-
-  canvas.width =
-    video.videoWidth;
-
-  canvas.height =
-    video.videoHeight;
-
-  context.drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  const imageData =
-    canvas.toDataURL(
-      "image/jpeg",
-      1
-    );
-
-  preview.src =
-    imageData;
-
-  preview.style.display =
-    "block";
-
-  video.style.display =
-    "none";
-
-}
-
-/* =========================================
-   फोर्स रिफ्रेश - यही एकमात्र तरीका है
-========================================= */
-
-function forceRefreshForm() {
-
-  /* सभी टेक्स्ट इनपुट खाली करो */
-  var allInputs =
-    document.querySelectorAll("input[type='text']");
-
-  allInputs.forEach(function(input) {
-
-    input.value = "";
-
-  });
-
-  /* सभी चेकबॉक्स अनचेक करो */
-  var allCheckboxes =
-    document.querySelectorAll("input[type='checkbox']");
-
-  allCheckboxes.forEach(function(cb) {
-
-    cb.checked = false;
-
-  });
-
-  /* फोटो प्रीव्यू हटाओ */
-  preview.style.display = "none";
-
-  preview.src = "";
-
-  /* कैमरा स्ट्रीम बंद करो */
-  if (currentStream) {
-
-    currentStream.getTracks().forEach(function(track) {
-
-      track.stop();
-
-    });
-
-    currentStream = null;
-
-  }
-
-  video.srcObject = null;
-
-  video.style.display = "block";
-
-  cameraStarted = false;
-
-  /* फ्रंट कैमरा बटन एक्टिव */
-  btnFrontCam.classList.add("active-cam");
-
-  btnBackCam.classList.remove("active-cam");
-
-  /* फ्रेश कैमरा शुरू करो */
-  startCamera("user");
-
-}
-
-/* =========================================
-   पेज लोड पर कैमरा ऑटो शुरू नहीं
-========================================= */
-
-/* startCamera("user") को हटा दिया गया -
-   अब कैमरा सिर्फ रिफ्रेश बटन दबाने पर
-   या कैमरा स्विच बटन दबाने पर शुरू होगा */
-
-/* =========================================
-   PDF डाउनलोड
-========================================= */
-
-async function downloadPDF() {
-
-  const button =
-    document.querySelector(
-      ".download-btn"
-    );
-
-  button.innerHTML =
-    "PDF तैयार हो रही है...";
-
-  button.disabled = true;
-
-  const {
-    jsPDF
-  } = window.jspdf;
-
-  const pdf =
-    new jsPDF({
-
-      orientation: "portrait",
-
-      unit: "mm",
-
-      format: "a4",
-
-      compress: true
-
-    });
-
-  const pages =
-    document.querySelectorAll(
-      ".page"
-    );
-
-  for (
-    let i = 0;
-    i < pages.length;
-    i++
-  ) {
-
-    const page =
-      pages[i];
-
-    const pageCanvas =
-      await html2canvas(page, {
-
-        scale: 3,
-
-        useCORS: true,
-
-        backgroundColor:
-          "#ffffff",
-
-        logging: false,
-
-        scrollX: 0,
-
-        scrollY: 0
-
-      });
-
-    const image =
-      pageCanvas.toDataURL(
-        "image/jpeg",
-        1.0
-      );
-
-    if (i > 0) {
-
-      pdf.addPage();
-
-    }
-
-    pdf.addImage(
-
-      image,
-
-      "JPEG",
-
-      0,
-
-      0,
-
-      210,
-
-      297,
-
-      "",
-
-      "FAST"
-
-    );
-
-  }
-
-  pdf.save(
-    "Electric-Riders-Registration-Form.pdf"
-  );
-
-  button.innerHTML =
-    "PDF डाउनलोड करें";
-
-  button.disabled =
-    false;
-
-}
-
-</script>
+        }
+    </script>
 
 </body>
 
